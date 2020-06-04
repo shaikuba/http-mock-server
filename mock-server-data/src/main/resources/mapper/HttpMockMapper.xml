@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shaikuba.mock.data.mapper.HttpMockMapper">
+
+    <resultMap id="MockRequestMap"
+               type="cn.shaikuba.mock.data.entity.HttpMockRequest">
+        <id column="id" property="id"/>
+        <result column="request_url" property="requestUrl"/>
+        <result column="request_method" property="requestMethod" typeHandler=""/>
+        <result column="form_data" property="formData"/>
+        <result column="request_body" property="requestBody"/>
+        <result column="request_headers" property="requestHeaders"/>
+        <result column="response_headers" property="responseHeaders"/>
+        <result column="response_body" property="responseBody"/>
+        <result column="status_code" property="statusCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+	<sql id="MOCK_REQUEST">
+		MOCK_REQUEST
+	</sql>
+
+    <sql id="MOCK_REQUEST_COLUMNS">
+        request_url, request_method, form_data, request_body, request_headers, response_headers, response_body
+        , status_code, description, create_time, update_time
+    </sql>
+
+    <insert id="save" parameterType="HttpMockRequest" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO <include refid="MOCK_REQUEST" />
+            (<include refid="MOCK_REQUEST_COLUMNS" />)
+        VALUES
+        (#{requestUrl}, #{requestMethod}, #{formData}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
+    </insert>
+    
+    <update id="update">
+        UPDATE <include refid="MOCK_REQUEST" />
+        <set>
+            <if test="entity.requestUrl != null and entity.requestUrl != ''">
+                request_url=#{entity.requestUrl},
+            </if>
+            <if test="entity.requestMethod != null and entity.requestMethod != ''">
+                request_method=#{entity.requestMethod},
+            </if>
+            <if test="entity.formData != null and entity.formData != ''">
+                form_data=#{entity.formData},
+            </if>
+            <if test="entity.requestBody != null and entity.requestBody != ''">
+                request_body=#{entity.requestBody},
+            </if>
+            <if test="entity.requestHeaders != null and entity.requestHeaders != ''">
+                request_headers=#{entity.requestHeaders},
+            </if>
+            <if test="entity.responseHeaders != null and entity.responseHeaders != ''">
+                response_headers=#{entity.responseHeaders},
+            </if>
+            <if test="entity.responseBody != null and entity.responseBody != ''">
+                response_body=#{entity.responseBody},
+            </if>
+            <if test="entity.statusCode != null and entity.statusCode != ''">
+                status_code=#{entity.statusCode},
+            </if>
+            <if test="entity.description != null and entity.description != ''">
+                description=#{entity.description},
+            </if>
+            <if test="entity.description != null and entity.description != ''">
+                update_time=NOW()
+            </if>
+        </set>
+        <where>
+            <if test="criteria.id != null">
+                id = #{criteria.id}
+            </if>
+        </where>
+    </update>
+    
+    <select id="findAll" resultMap="MockRequestMap" parameterType="Criteria" useCache="true">
+		SELECT *
+		FROM <include refid="MOCK_REQUEST" />
+        <where>
+            <if test="criteria.type != null and criteria.type != ''">
+                type = #{criteria.type}
+            </if>
+            <if test="criteria.name != null and criteria.name != ''">
+                AND (name like #{criteria.name} or platform like #{criteria.name})
+            </if>
+        </where>
+        <if test="criteria.sort != null">
+            ORDER BY ${sort.sortBy} ${sort.direction}
+        </if>
+        <choose>
+            <when test="criteria.page != null">
+                LIMIT ${page.pageNumber}, ${page.pageSize}
+            </when>
+            <otherwise>
+                LIMIT 0, 10
+            </otherwise>
+        </choose>
+    </select>
+
+	<select id="countByCriteria" parameterType="Criteria" resultType="int">
+        SELECT COUNT(ID) AS count
+        FROM <include refid="MOCK_REQUEST" />
+		<where>
+			<if test="criteria.url != null and criteria.url != ''">
+				url = #{criteria.url}
+			</if>
+			<if test="criteria.requestMethod != null and criteria.requestMethod != ''">
+				AND request_method = #{criteria.requestMethod}
+			</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml  version="1.0" encoding="GBK" ?>
+<CMS>
+    <eb>
+        <pub>
+            <TransCode>SZFH_SMSCONFIRM</TransCode>
+            <CIS>400090001271672</CIS>
+            <BankCode>102</BankCode>
+            <ID>rp.y.4000</ID>
+            <TranDate>20200122</TranDate>
+            <TranTime>090000</TranTime>
+            <fSeqno>10000000000000000032</fSeqno>
+            <RetCode>{{RetCode}}</RetCode>
+            <RetMsg>{{RetMsg}}</RetMsg>
+        </pub>
+        <out>
+            <CorpAccNo>4000023029200124946</CorpAccNo>
+            <CorpNo>BDP800009</CorpNo>
+            <PersonNo>{{PersonNo}}</PersonNo>
+            <SMSSendNo>100309281</SMSSendNo>
+            <VeriCode>1234</VeriCode>
+            <ReqReserved1></ReqReserved1>
+            <ReqReserved2></ReqReserved2>
+            <ReqReserved3></ReqReserved3>
+            <ReqReserved4></ReqReserved4>
+            <BankSeq>{{BankSeq}}</BankSeq>
+            <VfRetCode>{{VfRetCode}}</VfRetCode>
+            <VfRetMsg>{{VfRetMsg}}</VfRetMsg>
+            <RepReserved1></RepReserved1>
+            <RepReserved2></RepReserved2>
+            <RepReserved3></RepReserved3>
+            <RepReserved4></RepReserved4>
+        </out>
+    </eb>
+</CMS>

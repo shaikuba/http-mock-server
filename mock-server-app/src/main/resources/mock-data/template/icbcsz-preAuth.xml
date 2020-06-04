@@ -1,0 +1,41 @@
+<?xml  version="1.0" encoding="GBK" ?>
+<CMS>
+    <eb>
+        <pub>
+            <TransCode>SZFH_SMSAPPLY</TransCode>
+            <CIS>400090001271672</CIS>
+            <BankCode>102</BankCode>
+            <ID>rp.y.4000</ID>
+            <TranDate>20200122</TranDate>
+            <TranTime>090000</TranTime>
+            <fSeqno>00000000000000000054</fSeqno>
+            <RetCode>{{RetCode}}</RetCode>
+            <RetMsg>{{RetMsg}}</RetMsg>
+        </pub>
+        <out>
+            <CorpAccNo>4000023029200124946</CorpAccNo>
+            <CorpNo>BDP800009</CorpNo>
+            <PersonNo>{{PersonNo}}</PersonNo>
+            <AccNo>62122640000001</AccNo>
+            <SupType>2</SupType>
+            <AccName>abcde</AccName>
+            <IdType>0</IdType>
+            <IdCode>452313197010203040</IdCode>
+            <MobilePhone>135</MobilePhone>
+            <DeadLine>20990101</DeadLine>
+            <ReqReserved1>Null</ReqReserved1>
+            <ReqReserved2>Null</ReqReserved2>
+            <ReqReserved3>Null</ReqReserved3>
+            <ReqReserved4>Null</ReqReserved4>
+            <BankSeq>{{BankSeq}}</BankSeq>
+            <AccType></AccType>
+            <AreaCode></AreaCode>
+            <SMSSendFlag>{{SMSSendFlag}}</SMSSendFlag>
+            <SMSSendNo>{{SMSSendNo}}</SMSSendNo>
+            <RepReserved1></RepReserved1>
+            <RepReserved2></RepReserved2>
+            <RepReserved3></RepReserved3>
+            <RepReserved4></RepReserved4>
+        </out>
+    </eb>
+</CMS>

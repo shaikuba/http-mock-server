@@ -1,0 +1,60 @@
+##### spring #####
+spring:
+  profiles:
+    active: prod
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: Unified Mock Server
+
+##### server configuration #####
+server:
+  port: 8443
+  servlet:
+    context-path: /
+  ssl:
+    key-store: classpath:securities/server-keystore.p12
+    key-store-password: 123456
+    key-store-type: pkcs12
+    key-alias: serverkey
+    key-password: 123456
+
+    client-auth: want
+    trust-store: classpath:securities/client-truststore.p12
+    #trust-store-password: 123456
+
+  tomcat:
+    uri-encoding: UTF-8
+    max-connections: 50
+    max-threads: 50
+    min-spare-threads: 50
+    accept-count: 50
+    connection-timeout: 60
+
+##### mybatis #####
+mybatis:
+  type-aliases-package: cn.shaikuba.mock.entity
+  mapper-locations: mapper/*.xml
+
+##### page helper for mybatis #####
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  offset-as-page-num: true
+
+#management:
+management:
+  server:
+    port: 8882
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, health, autoconfig, shutdown, env, configprops
+
+

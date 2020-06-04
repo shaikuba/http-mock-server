@@ -1,0 +1,83 @@
+{
+"15800000000": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0000",
+    "respMsg": "交易成功"
+  },
+  "15800000001": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0524",
+    "respMsg": "生成短信验证失败"
+  },
+  "15800000002": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0563",
+    "respMsg": "银行卡尝试次数过多"
+  },
+  "15800000003": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0588",
+    "respMsg": "该卡连续交易失败次数超限"
+  },
+  "15800000004": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0158",
+    "respMsg": "银行风险受限"
+  },
+  "15800000005": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0157",
+    "respMsg": "未开通短信功能"
+  },
+  "15800000006": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0527",
+    "respMsg": "短信验证码不一致"
+  },
+  "15800000007": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E0160",
+    "respMsg": "短信验证码超过有效期"
+  },
+   "15800000008": {
+    "version": "1.0.2",
+    "mchtId": "ORG070000000000011111",
+    "mac": "C380BEC2BFD727A4B6845133519F3AD6",
+    "signType": "RSA",
+    "serialNo": "1009666387",
+    "respCode": "E9999",
+    "respMsg": "未知错误"
+  }
+}

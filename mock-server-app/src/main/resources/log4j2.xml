@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="MOCK-SERVER" status="WARN" monitorInterval="30">
+    <Properties>
+<!--        <property name="LOG_HOME">C:/logs</property>-->
+        <property name="LOG_HOME">/data/mock-server/logs</property>
+        <property name="FILENAME">mock-server</property>
+        <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t-%L] %-5level %logger{36} - %msg%n</property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" ignoreExceptions="false">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="${PATTERN}" />
+        </Console>
+
+        <RollingRandomAccessFile name="RollingFile"
+                                 fileName="${LOG_HOME}/${FILENAME}.log"
+                                 filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILENAME}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${PATTERN}" />
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+
+        </RollingRandomAccessFile>
+
+        <Async name="ASYNC" includeLocation="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Async>
+
+    </Appenders>
+
+    <Loggers>
+        <logger name="org.apache.http" level="warn" />
+        <logger name="org.springframework" level="info" />
+        <logger name="org.mybatis" level="info" />
+        <logger name="org.springframework.core" level="info" />
+        <logger name="org.springframework.beans" level="info" />
+        <logger name="org.springframework.context" level="info" />
+        <logger name="org.springframework.web" level="info" />
+        <logger name="org.mongodb.driver" level="info" />
+        <logger name="org.hibernate.validator" level="info" />
+
+        <Root level="info">
+            <AppenderRef ref="ASYNC"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
