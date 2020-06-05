@@ -3,15 +3,25 @@ package cn.shaikuba.mock.service.impl;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.Criteria;
 import cn.shaikuba.mock.service.MockRequestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("httpMockRequestService")
 public class HttpMockRequestService implements MockRequestService<HttpMockRequest> {
+
+    @Autowired
+    //private HttpMockMapper mockMapper;
+
     @Override
     public HttpMockRequest saveMockRequest(HttpMockRequest mockRequest) {
-        return null;
+        if (mockRequest.getRequestMethod() != null && mockRequest.getRequestUrl() != null) {
+            //return mockMapper.save(mockRequest);
+            return null;
+        } else {
+            throw new IllegalArgumentException("");
+        }
     }
 
     @Override
@@ -30,7 +40,9 @@ public class HttpMockRequestService implements MockRequestService<HttpMockReques
     }
 
     @Override
-    public List<HttpMockRequest> findMockRequests(Criteria<String, Object> criteria) {
+    public <C> List<HttpMockRequest> findMockRequests(Criteria<C> criteria) {
         return null;
     }
+
+
 }

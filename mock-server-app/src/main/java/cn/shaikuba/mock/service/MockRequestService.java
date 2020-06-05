@@ -16,5 +16,5 @@ public interface MockRequestService<T extends BaseEntity & MockRequest> {
 
     T findMockRequest(Long mockRequestId);
 
-    List<T> findMockRequests(Criteria<String, Object> criteria);
+    <C>List<T> findMockRequests(Criteria<C> criteria);
 }

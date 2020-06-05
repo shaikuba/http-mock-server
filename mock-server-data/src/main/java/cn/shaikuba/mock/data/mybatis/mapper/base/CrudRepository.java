@@ -1,7 +1,4 @@
-package cn.shaikuba.mock.data.mapper.base;
-
-import cn.shaikuba.mock.data.entity.base.Criteria;
-import org.apache.ibatis.annotations.Param;
+package cn.shaikuba.mock.data.mybatis.mapper.base;
 
 import java.io.Serializable;
 
@@ -32,9 +29,8 @@ public interface CrudRepository<T, ID extends Serializable> {
      * Update all entities by the given {@code criteria}
      *
      * @param entity fields' values tobe updated.
-     * @param criteria {@link Criteria#criteria} to find the target entity
      */
-    <S extends T> void update(@Param("entity") S entity, @Param("criteria") Criteria<String, Object> criteria);
+    <S extends T> void updateById(S entity);
 
     /**
      * Retrieves an entity by its id.

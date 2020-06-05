@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @Slf4j
 @RestController
 @RequestMapping("mock/manage")
-public class HttpMockController {
+public class HttpMockManagementController {
 
     @Resource(name = "httpMockRequestService")
     private HttpMockRequestService httpMockService;
@@ -30,7 +30,7 @@ public class HttpMockController {
     }
 
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResultVO<List<HttpMockRequest>> getMockObjList(@RequestBody Criteria<String, Object> criteria) {
+    public ResultVO<List<HttpMockRequest>> getMockObjList(@RequestBody Criteria<HttpMockRequest> criteria) {
         List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(criteria);
 
         return ResultVO.<List<HttpMockRequest>>success()

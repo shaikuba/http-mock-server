@@ -25,17 +25,7 @@ public class MongoJSONDataLoader extends JsonMockDataLoader<HttpMockRequest, Htt
 
     @Override
     public HttpMockRequest load(HttpMockRequest mockRequest) {
-
-//        CartDocument ddapMockDocument = mockRepository.findByMockKeyEquals("");
-//
-//        HttpMockResponse ddapMockResponse = new HttpMockResponse();
-//        ddapMockResponse.setMockKey(ddapMockDocument.getMockKey());
-//        ddapMockResponse.setResponseBody(ddapMockDocument.getMockResponse());
-//
-//        return ddapMockResponse;
-
         throw new UnsupportedOperationException("Not implemented yet.");
-
     }
 
 }

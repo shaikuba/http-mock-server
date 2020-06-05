@@ -9,13 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>cn.shaikuba.mock</groupId>
     <artifactId>mock-server-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
     <name>mock-server-app</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
