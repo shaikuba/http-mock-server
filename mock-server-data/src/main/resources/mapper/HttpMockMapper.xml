@@ -115,4 +115,9 @@
 		</where>
 	</select>
 
+    <delete id="delete" parameterType="int">
+        DELETE <include refid="MOCK_REQUEST" />
+        WHERE id = #{id}
+    </delete>
+
 </mapper>

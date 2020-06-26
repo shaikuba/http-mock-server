@@ -1,4 +1,4 @@
-package cn.shaikuba.mock.data.mybatis.mapper;
+package cn.shaikuba.mock.data.mybatis.typehandler;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

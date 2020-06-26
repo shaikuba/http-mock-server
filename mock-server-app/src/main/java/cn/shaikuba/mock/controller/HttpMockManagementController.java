@@ -37,13 +37,13 @@ public class HttpMockManagementController {
                 .withData(mockRequestList);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO saveMockRequest(@RequestBody HttpMockRequest mockRequest) {
         httpMockService.saveMockRequest(mockRequest);
         return ResultVO.success("Save Successfully");
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO updateMockRequest(@RequestBody HttpMockRequest mockRequest) {
         httpMockService.updateMockRequest(mockRequest);
         return ResultVO.success("Update Successfully");

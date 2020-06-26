@@ -86,7 +86,7 @@ public interface CrudRepository<T, ID extends Serializable> {
      * @param entity
      * @throws IllegalArgumentException in case the given entity is {@literal null}.
      */
-    void delete(T entity);
+    //void delete(T entity);
 
     /**
      * Deletes the given entities.
@@ -94,11 +94,11 @@ public interface CrudRepository<T, ID extends Serializable> {
      * @param entities
      * @throws IllegalArgumentException in case the given {@link Iterable} is {@literal null}.
      */
-    void delete(Iterable<? extends T> entities);
+    //void delete(Iterable<? extends T> entities);
 
     /**
      * Deletes all entities managed by the repository.
      */
-    void deleteAll();
+    //void deleteAll();
 
 }
