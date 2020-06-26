@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class HttpMockService {
+public class HttpMockCacheService {
 
     @Autowired
     private MockRequestHandlerManager handlerManager;
