@@ -16,6 +16,7 @@
         <module>mock-server-app</module>
         <module>mock-server-data</module>
         <module>mock-server-common</module>
+        <module>mock-server-sql</module>
     </modules>
 
     <properties>
