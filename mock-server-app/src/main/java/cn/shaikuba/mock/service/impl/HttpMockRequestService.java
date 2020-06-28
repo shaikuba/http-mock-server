@@ -2,6 +2,7 @@ package cn.shaikuba.mock.service.impl;
 
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.Criteria;
+import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import cn.shaikuba.mock.service.MockRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,36 +13,36 @@ import java.util.List;
 public class HttpMockRequestService implements MockRequestService<HttpMockRequest> {
 
     @Autowired
-    //private HttpMockMapper mockMapper;
+    private HttpMockMapper mockMapper;
 
     @Override
     public HttpMockRequest saveMockRequest(HttpMockRequest mockRequest) {
         if (mockRequest.getRequestMethod() != null && mockRequest.getRequestUrl() != null) {
-            //return mockMapper.save(mockRequest);
-            return null;
+            mockMapper.save(mockRequest);
+            return mockRequest;
         } else {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("Request method and request URL is required.");
         }
     }
 
     @Override
     public void deleteMockRequest(List<Long> idList) {
-
+        mockMapper.delete(idList);
     }
 
     @Override
     public void updateMockRequest(HttpMockRequest mockRequest) {
-
+        mockMapper.updateById(mockRequest);
     }
 
     @Override
     public HttpMockRequest findMockRequest(Long mockRequestId) {
-        return null;
+        return mockMapper.findOne(mockRequestId);
     }
 
     @Override
     public <C> List<HttpMockRequest> findMockRequests(Criteria<C> criteria) {
-        return null;
+        return mockMapper.findAll(criteria);
     }
 
 

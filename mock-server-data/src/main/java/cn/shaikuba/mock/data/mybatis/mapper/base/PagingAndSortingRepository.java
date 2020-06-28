@@ -22,7 +22,7 @@ public interface PagingAndSortingRepository<T, ID extends Serializable> extends 
      * @param sort
      * @return all entities sorted by the given options
      */
-    Iterable<T> findAll(Sortable sort);
+//    Iterable<T> findAll(Sortable sort);
 
     /**
      * Returns a {@link Pageable} of entities meeting the paging restriction provided in the {@code Pageable} object.
@@ -30,7 +30,7 @@ public interface PagingAndSortingRepository<T, ID extends Serializable> extends 
      * @param pageable
      * @return a page of entities
      */
-    List<T> findAll(Pageable pageable);
+//    List<T> findAll(Pageable pageable);
 
     /**
      * @see #findAll(Sortable) {@link #findAll(Pageable)}
@@ -38,7 +38,7 @@ public interface PagingAndSortingRepository<T, ID extends Serializable> extends 
      * @param sort
      * @return
      */
-    List<T> findAll(Pageable pageable, Sortable sort);
+//    List<T> findAll(Pageable pageable, Sortable sort);
 
     /**
      * @see #findAll(Sortable) {@link #findAll(Pageable)}

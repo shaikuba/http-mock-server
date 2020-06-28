@@ -1,7 +1,7 @@
 ##### spring #####
 spring:
   profiles:
-    active: prod
+    active: dev
   output:
     ansi:
       enabled: always
@@ -34,16 +34,17 @@ server:
 
 ##### mybatis #####
 mybatis:
-  type-aliases-package: cn.shaikuba.mock.entity
+  type-aliases-package: cn.shaikuba.mock.data.entity
   mapper-locations: mapper/*.xml
+  type-handlers-package: cn.shaikuba.mock.data.mybatis.typehandler
 
 ##### page helper for mybatis #####
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-  offset-as-page-num: true
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
+#  offset-as-page-num: true
 
 #management:
 management:

@@ -3,15 +3,18 @@ package cn.shaikuba.mock.data.entity;
 import cn.shaikuba.mock.common.process.entity.MockRequest;
 import cn.shaikuba.mock.common.process.entity.MockResponse;
 import cn.shaikuba.mock.data.entity.base.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestMethod;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
 public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements MockRequest, MockResponse {
 
-    private RequestMethod requestMethod;
+    private String requestMethod;
     private String requestUrl;
     private String queryString;
     private String formData;

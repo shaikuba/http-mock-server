@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -26,13 +26,13 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("mock/api")
+@RequestMapping("/mock")
 public class HttpMockRequestController {
 
     @Autowired
     private HttpMockRequestService mockRequestService;
 
-    @RequestMapping(consumes = {MediaType.APPLICATION_JSON_VALUE
+    @RequestMapping(value = "/api/**", consumes = {MediaType.APPLICATION_JSON_VALUE
             , MediaType.TEXT_PLAIN_VALUE
             , MediaType.APPLICATION_FORM_URLENCODED_VALUE
             , MediaType.APPLICATION_XHTML_XML_VALUE
@@ -44,36 +44,38 @@ public class HttpMockRequestController {
             HttpMockRequest mockRequest = objectConverter(httpRequest);
             Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
                     .criteria(mockRequest);
-            List<HttpMockRequest> mockRequestList = mockRequestService.findMockRequests(criteria);
+            List<HttpMockRequest> mockRequestList = mockRequestService.<HttpMockRequest>findMockRequests(criteria);
 
             if (mockRequestList.size() == 0) {
                 serviceNotFound(httpResponse);
+                return;
             }
             HttpMockRequest mockResponse = mockRequestList.get(0);
             httpResponse.setStatus(mockResponse.getStatusCode());
             httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).getType());
             httpResponse.setCharacterEncoding("UTF-8");
+
             if (StringUtils.isNotEmpty(mockResponse.getResponseBody())) {
-                httpResponse.getWriter().write(mockResponse.getResponseBody());
-                httpResponse.getWriter().flush();
+                PrintWriter printWriter = httpResponse.getWriter();
+                printWriter.write(mockResponse.getResponseBody());
+                printWriter.flush();
             } else {
-                httpResponse.getWriter().write("");
-                httpResponse.getWriter().flush();
+                PrintWriter printWriter = httpResponse.getWriter();
+                printWriter.write("");
+                printWriter.flush();
             }
 
         } catch (IOException e) {
             mockServiceException(httpResponse, e);
         } finally {
-            httpResponse.getWriter()
-                    .close();
         }
 
     }
 
     private HttpMockRequest objectConverter(HttpServletRequest servletRequest) throws IOException {
         HttpMockRequest.HttpMockRequestBuilder mockRequestBuilder = HttpMockRequest.builder()
-                .requestMethod(RequestMethod.valueOf(servletRequest.getMethod()))
-                .requestUrl(servletRequest.getRequestURI())
+                .requestMethod(servletRequest.getMethod())
+                .requestUrl(servletRequest.getRequestURI().substring(servletRequest.getRequestURI().lastIndexOf("api")+3))
                 .queryString(servletRequest.getQueryString())
                 .formData(servletRequest.getQueryString());
 
@@ -98,15 +100,16 @@ public class HttpMockRequestController {
         response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         response.setCharacterEncoding("UTF-8");
         response.sendError(HttpServletResponse.SC_NOT_FOUND, "Mock service is not found");
+        return;
     }
 
-    private void mockServiceException(HttpServletResponse response, Throwable throwable) throws IOException {
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter()
-                .println(JSON.toJSONString(CollectionUtils.buildMap(throwable.getMessage(), ExceptionUtils.getRootCauseMessage(throwable))));
-        response.getWriter()
-                .flush();
+    private void mockServiceException(HttpServletResponse httpResponse, Throwable throwable) throws IOException {
+        httpResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        PrintWriter printWriter = httpResponse.getWriter();
+        printWriter.println(JSON.toJSONString(CollectionUtils.buildMap(throwable.getMessage(), ExceptionUtils.getRootCauseMessage(throwable))));
+        printWriter.flush();
     }
 
 }

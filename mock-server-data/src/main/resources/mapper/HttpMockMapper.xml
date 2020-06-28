@@ -6,25 +6,27 @@
                type="cn.shaikuba.mock.data.entity.HttpMockRequest">
         <id column="id" property="id"/>
         <result column="request_url" property="requestUrl"/>
-        <result column="request_method" property="requestMethod" typeHandler=""/>
+        <result column="request_method" property="requestMethod"/>
         <result column="form_data" property="formData"/>
-        <result column="content_type" property="contentType"/>
+        <result column="content_type" property="contentType" jdbcType="VARCHAR"/>
         <result column="request_body" property="requestBody"/>
         <result column="request_headers" property="requestHeaders"/>
         <result column="response_headers" property="responseHeaders"/>
         <result column="response_body" property="responseBody"/>
         <result column="status_code" property="statusCode"/>
+        <result column="description" property="description"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
 	<sql id="MOCK_REQUEST">
-		MOCK_REQUEST
+        mock_request
 	</sql>
 
     <sql id="MOCK_REQUEST_COLUMNS">
-        request_url, request_method, form_data, content_type, request_body, request_headers, response_headers, response_body
-        , status_code, description, create_time, update_time
+        `request_url`, `request_method`, `form_data`, `content_type`, `request_body`, `request_headers`,
+        `response_headers`, `response_body`
+        , `status_code`, `description`, `create_time`, `update_time`
     </sql>
 
     <insert id="save" parameterType="HttpMockRequest" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -77,23 +79,23 @@
             </if>
         </where>
     </update>
-    
-    <select id="findAll" resultMap="MockRequestMap" parameterType="Criteria" useCache="true">
-		SELECT *
-		FROM <include refid="MOCK_REQUEST" />
+
+    <select id="findAll" resultMap="MockRequestMap" parameterType="Criteria">
+        SELECT * FROM
+        <include refid="MOCK_REQUEST"/>
         <where>
-            <if test="criteria.type != null and criteria.type != ''">
-                type = #{criteria.type}
+            <if test="criteria.requestMethod != null and criteria.requestMethod != ''">
+                request_method = #{criteria.requestMethod}
             </if>
-            <if test="criteria.name != null and criteria.name != ''">
-                AND (name like #{criteria.name} or platform like #{criteria.name})
+            <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
+                AND request_url = #{criteria.requestUrl}
             </if>
         </where>
-        <if test="criteria.sort != null">
+        <if test="sort != null">
             ORDER BY ${sort.sortBy} ${sort.direction}
         </if>
         <choose>
-            <when test="criteria.page != null">
+            <when test="page != null">
                 LIMIT ${page.pageNumber}, ${page.pageSize}
             </when>
             <otherwise>
@@ -115,9 +117,17 @@
 		</where>
 	</select>
 
-    <delete id="delete" parameterType="int">
-        DELETE <include refid="MOCK_REQUEST" />
-        WHERE id = #{id}
+    <delete id="delete" parameterType="list">
+        DELETE FROM <include refid="MOCK_REQUEST" />
+        <where>
+            <if test="list != null and list.size != 0">
+                id IN
+                <foreach item="item" index="index" collection="list"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
     </delete>
 
 </mapper>

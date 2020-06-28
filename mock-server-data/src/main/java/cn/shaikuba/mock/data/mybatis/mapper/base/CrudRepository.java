@@ -1,6 +1,7 @@
 package cn.shaikuba.mock.data.mybatis.mapper.base;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Interface for generic CRUD operations on a repository for a specific type.
@@ -14,7 +15,7 @@ public interface CrudRepository<T, ID extends Serializable> {
      * @param entity
      * @return the saved entity
      */
-    <S extends T> S save(S entity);
+    <S extends T> int save(S entity);
 
     /**
      * Saves all given entities.
@@ -79,6 +80,8 @@ public interface CrudRepository<T, ID extends Serializable> {
      * @throws IllegalArgumentException in case the given {@code id} is {@literal null}
      */
     void delete(ID id);
+
+    void delete(List<ID> idList);
 
     /**
      * Deletes a given entity.

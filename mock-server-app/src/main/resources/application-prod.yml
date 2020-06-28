@@ -3,15 +3,15 @@
 # Druid: https://github.com/alibaba/druid
 # Druid Spring Starter: https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter
 spring:
-  data:
-    mongodb:
-      uri: mongodb://10.67.36.170:27017/mockServer
+#  data:
+#    mongodb:
+#      uri: mongodb://10.67.36.170:27017/mockServer
   datasource:
     name: druidDataSource
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/mock-server_online?serverTimezone=UTC&useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8
+      url: jdbc:mysql://localhost:3306/mock-server?serverTimezone=UTC&useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8
       username: root
       password: 123456
       filters: stat,wall,log4j,config # wall: firewall, filters used to statistic the data for display on monitor page
