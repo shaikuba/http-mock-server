@@ -33,7 +33,7 @@ public class HttpMockCacheService {
 
         HttpMockRequest mockResponse = null;
         try {
-            mockRequestHandler.setUpDataSource(new MockDataSourceAdapter((MockDataLoader) appContext.getBean(Class.forName(dataLoader))));
+            mockRequestHandler.setUpDataSource(new MockDataSourceAdapter(appContext.getBean((Class<MockDataLoader>) Class.forName(dataLoader))));
             mockResponse = mockRequestHandler.handle(mockRequest);
             log.info("Mock response {}", JSON.toJSONString(mockResponse));
         } catch (ClassNotFoundException e) {

@@ -76,20 +76,20 @@ public class MockRequestHandlerManager implements MockRequestHandlerSelector<Moc
             throw new IllegalArgumentException(String.format("No generic type found in handler %s.", handler.getClass()));
         }
 
-        registerHandler(handler.getClass().getName(), handler, oneOff);
+        registerHandler(genericClass.getName(), handler, oneOff);
     }
 
     /**
      * Register handler to router.
      *
-     * @param handlerClassifier handler classifier.
+     * @param mockRequestType handler classifier.
      * @param handler handler instance implement of {@link MockRequestHandler}.
      * @param oneOff  If this is a one-off handler.
      */
-    public void registerHandler(String handlerClassifier, MockRequestHandler handler, boolean oneOff) {
+    public void registerHandler(String mockRequestType, MockRequestHandler handler, boolean oneOff) {
 
         // Validate
-        if (handlerClassifier == null) {
+        if (mockRequestType == null) {
             throw new IllegalArgumentException("mock request type must be specified.");
         }
         if (handler == null) {
@@ -97,8 +97,8 @@ public class MockRequestHandlerManager implements MockRequestHandlerSelector<Moc
         }
 
         // Register
-        handlerMap.put(handlerClassifier, new MockRequestHandlerEntity(handler, oneOff));
-        log.debug(String.format("Handler %s registered.", handler.getClass().getName()));
+        handlerMap.put(mockRequestType, new MockRequestHandlerEntity(handler, oneOff));
+        log.debug(String.format("Mock request handler %s for %s registered.", handler.getClass().getName(), mockRequestType));
     }
 
     /**

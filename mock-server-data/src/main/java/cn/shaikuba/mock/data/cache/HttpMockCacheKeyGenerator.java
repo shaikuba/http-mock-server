@@ -2,11 +2,9 @@ package cn.shaikuba.mock.data.cache;
 
 import cn.shaikuba.mock.common.cache.BaseCacheKeyGenerator;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Qualifier("httpMockKey")
-@Component
+@Component("httpMockKey")
 public class HttpMockCacheKeyGenerator extends BaseCacheKeyGenerator {
 
     @Override

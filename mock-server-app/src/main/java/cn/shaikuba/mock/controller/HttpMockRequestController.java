@@ -3,6 +3,7 @@ package cn.shaikuba.mock.controller;
 import cn.shaikuba.mock.common.util.CollectionUtils;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.Criteria;
+import cn.shaikuba.mock.service.HttpMockCacheService;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,6 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -31,6 +31,9 @@ public class HttpMockRequestController {
 
     @Autowired
     private HttpMockRequestService mockRequestService;
+
+    @Autowired
+    private HttpMockCacheService httpMockCacheService;
 
     @RequestMapping(value = "/api/**", consumes = {MediaType.APPLICATION_JSON_VALUE
             , MediaType.TEXT_PLAIN_VALUE
@@ -44,13 +47,14 @@ public class HttpMockRequestController {
             HttpMockRequest mockRequest = objectConverter(httpRequest);
             Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
                     .criteria(mockRequest);
-            List<HttpMockRequest> mockRequestList = mockRequestService.<HttpMockRequest>findMockRequests(criteria);
+//            List<HttpMockRequest> mockRequestList = mockRequestService.<HttpMockRequest>findMockRequests(criteria);
+//            if (mockRequestList.size() == 0) {
+//                serviceNotFound(httpResponse);
+//                return;
+//            }
+//            HttpMockRequest mockResponse = mockRequestList.get(0);
 
-            if (mockRequestList.size() == 0) {
-                serviceNotFound(httpResponse);
-                return;
-            }
-            HttpMockRequest mockResponse = mockRequestList.get(0);
+            HttpMockRequest mockResponse = httpMockCacheService.handle(mockRequest);
             httpResponse.setStatus(mockResponse.getStatusCode());
             httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).getType());
             httpResponse.setCharacterEncoding("UTF-8");
