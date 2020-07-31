@@ -6,6 +6,7 @@
                type="cn.shaikuba.mock.data.entity.HttpMockRequest">
         <id column="id" property="id"/>
         <result column="request_url" property="requestUrl"/>
+        <result column="query_string" property="queryString"/>
         <result column="request_method" property="requestMethod"/>
         <result column="form_data" property="formData"/>
         <result column="content_type" property="contentType" jdbcType="VARCHAR"/>
@@ -24,7 +25,7 @@
 	</sql>
 
     <sql id="MOCK_REQUEST_COLUMNS">
-        `request_url`, `request_method`, `form_data`, `content_type`, `request_body`, `request_headers`,
+        `request_url`, `query_string`,  `request_method`, `form_data`, `content_type`, `request_body`, `request_headers`,
         `response_headers`, `response_body`
         , `status_code`, `description`, `create_time`, `update_time`
     </sql>
@@ -33,7 +34,7 @@
         INSERT INTO <include refid="MOCK_REQUEST" />
             (<include refid="MOCK_REQUEST_COLUMNS" />)
         VALUES
-        (#{requestUrl}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
+        (#{requestUrl}, #{queryString}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
     </insert>
     
     <update id="updateById">
@@ -41,6 +42,9 @@
         <set>
             <if test="requestUrl != null and requestUrl != ''">
                 request_url=#{requestUrl},
+            </if>
+            <if test="queryString != null and queryString != ''">
+                query_string=#{queryString},
             </if>
             <if test="requestMethod != null and requestMethod != ''">
                 request_method=#{requestMethod},
@@ -80,6 +84,16 @@
         </where>
     </update>
 
+    <select id="findOne" resultMap="MockRequestMap" parameterType="java.lang.Long">
+        SELECT * FROM
+        <include refid="MOCK_REQUEST"/>
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
     <select id="findAll" resultMap="MockRequestMap" parameterType="Criteria">
         SELECT * FROM
         <include refid="MOCK_REQUEST"/>
@@ -89,6 +103,9 @@
             </if>
             <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
                 AND request_url = #{criteria.requestUrl}
+            </if>
+            <if test="criteria.queryString != null and criteria.queryString != ''">
+                AND query_string = #{criteria.queryString}
             </if>
         </where>
         <if test="sort != null">
@@ -114,6 +131,9 @@
 			<if test="criteria.requestMethod != null and criteria.requestMethod != ''">
 				AND request_method = #{criteria.requestMethod}
 			</if>
+            <if test="criteria.queryString != null and criteria.queryString != ''">
+                AND query_string = #{criteria.queryString}
+            </if>
 		</where>
 	</select>
 

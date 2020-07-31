@@ -24,8 +24,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <jdk.version>1.8</jdk.version>
-
         <logback.version>1.2.3</logback.version>
+        <rest-assured.version>4.3.1</rest-assured.version>
     </properties>
 
     <dependencyManagement>
@@ -116,6 +116,26 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.62</version>
+            </dependency>
+
+            <!--    RestAssured includes JsonPath and XmlPath-->
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${rest-assured.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>json-path</artifactId>
+                <version>${rest-assured.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>xml-path</artifactId>
+                <version>${rest-assured.version}</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>

@@ -4,6 +4,7 @@ import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.api.ResultVO;
 import cn.shaikuba.mock.data.entity.base.Criteria;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class HttpMockManagementController {
     @GetMapping("/{id}")
     public ResultVO<HttpMockRequest> getMockObj(@PathVariable Long id) {
         HttpMockRequest mockRequest = httpMockService.findMockRequest(id);
-
+        jsonBodyFormat(mockRequest);
         return ResultVO.<HttpMockRequest>success()
                 .withData(mockRequest);
     }
@@ -45,8 +46,13 @@ public class HttpMockManagementController {
 
     @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO updateMockRequest(@RequestBody HttpMockRequest mockRequest) {
+        jsonBodyFormat(mockRequest);
         httpMockService.updateMockRequest(mockRequest);
         return ResultVO.success("Update Successfully");
+    }
+
+    private void jsonBodyFormat(HttpMockRequest mockRequest) {
+        mockRequest.setResponseBody(JSON.parseObject(mockRequest.getResponseBody()).toJSONString());
     }
 
     @DeleteMapping(params = "idList")
