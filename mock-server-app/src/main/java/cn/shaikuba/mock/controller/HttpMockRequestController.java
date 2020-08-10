@@ -56,7 +56,7 @@ public class HttpMockRequestController {
 
             HttpMockRequest mockResponse = httpMockCacheService.handle(mockRequest);
             httpResponse.setStatus(mockResponse.getStatusCode());
-            httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).getType());
+            httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).toString());
             httpResponse.setCharacterEncoding("UTF-8");
 
             if (StringUtils.isNotEmpty(mockResponse.getResponseBody())) {
