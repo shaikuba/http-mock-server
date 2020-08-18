@@ -41,7 +41,6 @@ public interface PagingAndSortingRepository<T, ID extends Serializable> extends 
 //    List<T> findAll(Pageable pageable, Sortable sort);
 
     /**
-     * @see #findAll(Sortable) {@link #findAll(Pageable)}
      * @param criteria contains query conditions and sortable, pageable
      * @return
      */
