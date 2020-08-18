@@ -30,7 +30,7 @@ public class HttpMockManagementController {
                 .withData(mockRequest);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "list", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO<List<HttpMockRequest>> getMockObjList(@RequestBody Criteria<HttpMockRequest> criteria) {
         List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(criteria);
 
@@ -38,13 +38,13 @@ public class HttpMockManagementController {
                 .withData(mockRequestList);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO saveMockRequest(@RequestBody HttpMockRequest mockRequest) {
         httpMockService.saveMockRequest(mockRequest);
         return ResultVO.success("Save Successfully");
     }
 
-    @PutMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO updateMockRequest(@RequestBody HttpMockRequest mockRequest) {
         jsonBodyFormat(mockRequest);
         httpMockService.updateMockRequest(mockRequest);
