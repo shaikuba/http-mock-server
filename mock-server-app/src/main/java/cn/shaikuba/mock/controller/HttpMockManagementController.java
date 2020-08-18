@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 @Slf4j
 @RestController
 @RequestMapping("mock/manage")
+@CrossOrigin(origins = "*")
 public class HttpMockManagementController {
 
     @Resource(name = "httpMockRequestService")
