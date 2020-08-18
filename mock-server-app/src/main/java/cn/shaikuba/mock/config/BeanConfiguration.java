@@ -20,4 +20,5 @@ public class BeanConfiguration {
 
         return handlerManager;
     }
+
 }
