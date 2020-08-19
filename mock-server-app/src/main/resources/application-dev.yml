@@ -33,3 +33,8 @@ spring:
     livereload:
       enabled: true
 
+  ldap:
+    embedded:
+      ldif: classpath:ldap/ldap-test-server.ldif
+      base-dn: dc=springframework,dc=org
+      port: 8389
