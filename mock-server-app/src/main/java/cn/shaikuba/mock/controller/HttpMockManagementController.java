@@ -6,6 +6,7 @@ import cn.shaikuba.mock.data.entity.base.Criteria;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +42,19 @@ public class HttpMockManagementController {
 
     @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO saveMockRequest(@RequestBody HttpMockRequest mockRequest) {
+        if (isValid(mockRequest)) {
+            return ResultVO.fail("Some required fields' value is empty!");
+        }
         httpMockService.saveMockRequest(mockRequest);
         return ResultVO.success("Save Successfully");
+    }
+
+    private boolean isValid(HttpMockRequest mockRequest) {
+        return !StringUtils.isAnyEmpty(mockRequest.getRequestMethod()
+                , mockRequest.getRequestUrl()
+                , mockRequest.getContentType()
+                , mockRequest.getResponseBody())
+                && mockRequest.getStatusCode() > 0;
     }
 
     @PutMapping(value = "update", consumes = MediaType.APPLICATION_JSON_VALUE)

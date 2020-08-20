@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @Data
 public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements MockRequest, MockResponse {
 
-    private String requestMethod;
     private String requestUrl;
+    private String requestMethod;
     private String queryString;
     private String formData;
-    private Integer statusCode;
-    private String contentType;
     private String requestHeaders;
     private String requestBody;
+    private Integer statusCode;
     private String responseHeaders;
     private String responseBody;
+    private String contentType;
     private String description;
 
 }
