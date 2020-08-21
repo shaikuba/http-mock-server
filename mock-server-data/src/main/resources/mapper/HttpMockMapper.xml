@@ -37,7 +37,7 @@
         (#{requestUrl}, #{queryString}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
     </insert>
     
-    <update id="updateById">
+    <update id="update">
         UPDATE <include refid="MOCK_REQUEST" />
         <set>
             <if test="requestUrl != null and requestUrl != ''">
@@ -81,6 +81,22 @@
             <if test="criteria.id != null">
                 id = #{id}
             </if>
+            <choose>
+                <when test="criteria.id != null">
+                    id = #{id}
+                </when>
+                <otherwise>
+                    <if test="criteria.url != null and criteria.url != ''">
+                        url = #{criteria.url}
+                    </if>
+                    <if test="criteria.requestMethod != null and criteria.requestMethod != ''">
+                        AND request_method = #{criteria.requestMethod}
+                    </if>
+                    <if test="criteria.queryString != null and criteria.queryString != ''">
+                        AND query_string = #{criteria.queryString}
+                    </if>
+                </otherwise>
+            </choose>
         </where>
     </update>
 

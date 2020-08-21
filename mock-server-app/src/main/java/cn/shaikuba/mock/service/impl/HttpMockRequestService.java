@@ -32,7 +32,7 @@ public class HttpMockRequestService implements MockRequestService<HttpMockReques
 
     @Override
     public void updateMockRequest(HttpMockRequest mockRequest) {
-        mockMapper.updateById(mockRequest);
+        mockMapper.update(mockRequest);
     }
 
     @Override

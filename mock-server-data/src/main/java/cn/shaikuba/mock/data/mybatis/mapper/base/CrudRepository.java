@@ -31,7 +31,7 @@ public interface CrudRepository<T, ID extends Serializable> {
      *
      * @param entity fields' values tobe updated.
      */
-    <S extends T> void updateById(S entity);
+    <S extends T> void update(S entity);
 
     /**
      * Retrieves an entity by its id.

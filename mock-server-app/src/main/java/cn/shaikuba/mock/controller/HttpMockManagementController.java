@@ -8,9 +8,11 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -45,7 +47,12 @@ public class HttpMockManagementController {
         if (isValid(mockRequest)) {
             return ResultVO.fail("Some required fields' value is empty!");
         }
-        httpMockService.saveMockRequest(mockRequest);
+        List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(Criteria.newCriteria().<HttpMockRequest>criteria(mockRequest));
+        if (CollectionUtils.isEmpty(mockRequestList)) {
+            httpMockService.saveMockRequest(mockRequest);
+        } else {
+            httpMockService.updateMockRequest(mockRequest);
+        }
         return ResultVO.success("Save Successfully");
     }
 
