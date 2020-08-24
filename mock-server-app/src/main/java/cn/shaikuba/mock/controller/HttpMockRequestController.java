@@ -45,8 +45,8 @@ public class HttpMockRequestController {
 
         try {
             HttpMockRequest mockRequest = objectConverter(httpRequest);
-            Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
-                    .criteria(mockRequest);
+//            Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
+//                    .criteria(mockRequest);
 //            List<HttpMockRequest> mockRequestList = mockRequestService.<HttpMockRequest>findMockRequests(criteria);
 //            if (mockRequestList.size() == 0) {
 //                serviceNotFound(httpResponse);

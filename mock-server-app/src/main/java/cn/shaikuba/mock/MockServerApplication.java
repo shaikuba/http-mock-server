@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Slf4j
 @PropertySource(value = "classpath:mock-server.properties")
-@EnableCaching
+//@EnableCaching
 @MapperScan({"cn.shaikuba.mock.data.mybatis.mapper"})
 @SpringBootApplication
 public class MockServerApplication {

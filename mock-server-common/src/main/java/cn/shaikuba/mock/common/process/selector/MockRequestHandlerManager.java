@@ -27,7 +27,7 @@ public class MockRequestHandlerManager implements MockRequestHandlerSelector<Moc
                     handlerClassifier.getName(), handlerEntity.getHandler().getClass().getName()));
             mockRequestHandler = handlerEntity.getHandler();
             if (handlerEntity.isOneOff()) {
-                handlerMap.remove(handlerClassifier);
+                handlerMap.remove(handlerClassifier.getName());
             }
         } else {
             log.debug(String.format("No registered handler found for mock request type %s.",

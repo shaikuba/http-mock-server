@@ -1,5 +1,8 @@
 package cn.shaikuba.mock.data.entity.api;
 
+import cn.shaikuba.mock.data.entity.base.Pageable;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @ToString
@@ -13,9 +16,12 @@ public class ResultVO<T> {
 
     private T data;
 
+    @Setter
+    @Getter
+    private Pageable pageable;
+
     public ResultVO() {
     }
-
     private ResultVO(String code, String message) {
         this.code = code;
         this.message = message;

@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 13/08/2020 21:36:40
+ Date: 21/08/2020 18:22:34
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `mock_request`  (
   `create_time` datetime NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of mock_request
@@ -62,5 +62,6 @@ INSERT INTO `mock_request` VALUES (4, '/person', NULL, 'POST', 'application/json
 INSERT INTO `mock_request` VALUES (5, '/person/1', NULL, 'DELETE', 'application/json', '', '', '', '{\n	\"code\": \"0000\",\n	\"message\": \"operation success\"\n}', '', 200, 'Rest api to get a person by id', '2020-06-28 14:36:14', '2020-06-28 14:36:14');
 INSERT INTO `mock_request` VALUES (6, '/cart/goods/1', NULL, 'GET', 'application/json', '', '', '', '{\"cartId\":1,\"goodsName\":\"Huawei\",\"price\":1200,\"amount\":5,\"description\":\"华为P20\"}', '', 200, 'Rest api to get cart goods by goods id', '2020-07-12 15:55:34', '2020-07-12 15:55:34');
 INSERT INTO `mock_request` VALUES (8, '/cart/goods', 'goodsId=1', 'GET', 'application/json', '', '', '', '{\"cartId\":1,\"goodsName\":\"Huawei\",\"price\":1200,\"amount\":5,\"description\":\"华为P20\"}', '', 200, 'Rest api to get cart goods by goods id', '2020-07-30 20:48:15', '2020-07-30 20:48:15');
+INSERT INTO `mock_request` VALUES (9, '/cart/goods', 'cartId=1', 'GET', 'application/json', '', '', '', '{\"cartId\":1,\"goodsList\":[{\"goodsName\":\"Huawei\",\"price\":1200,\"amount\":5,\"description\":\"华为P20\"},{\"goodsName\":\"XiaoMi\",\"price\":1000,\"amount\":4,\"description\":\"小米xxx\"},{\"goodsName\":\"Vivo\",\"price\":1100,\"amount\":3,\"description\":\"VivoXXX\"}]}', '', 200, 'Rest api to get cart goods by goods id', '2020-08-16 18:00:24', '2020-08-16 18:00:24');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -40,14 +40,8 @@
     <update id="update">
         UPDATE <include refid="MOCK_REQUEST" />
         <set>
-            <if test="requestUrl != null and requestUrl != ''">
-                request_url=#{requestUrl},
-            </if>
             <if test="queryString != null and queryString != ''">
                 query_string=#{queryString},
-            </if>
-            <if test="requestMethod != null and requestMethod != ''">
-                request_method=#{requestMethod},
             </if>
             <if test="formData != null and formData != ''">
                 form_data=#{formData},
@@ -73,27 +67,19 @@
             <if test="description != null and description != ''">
                 description=#{description},
             </if>
-            <if test="description != null and description != ''">
-                update_time=NOW()
-            </if>
+            update_time=NOW()
         </set>
         <where>
-            <if test="criteria.id != null">
-                id = #{id}
-            </if>
             <choose>
-                <when test="criteria.id != null">
+                <when test="id != null and id != 0">
                     id = #{id}
                 </when>
                 <otherwise>
-                    <if test="criteria.url != null and criteria.url != ''">
-                        url = #{criteria.url}
+                    <if test="requestUrl != null and requestUrl != ''">
+                        request_url=#{requestUrl}
                     </if>
-                    <if test="criteria.requestMethod != null and criteria.requestMethod != ''">
-                        AND request_method = #{criteria.requestMethod}
-                    </if>
-                    <if test="criteria.queryString != null and criteria.queryString != ''">
-                        AND query_string = #{criteria.queryString}
+                    <if test="requestMethod != null and requestMethod != ''">
+                        AND request_method=#{requestMethod}
                     </if>
                 </otherwise>
             </choose>
@@ -115,13 +101,10 @@
         <include refid="MOCK_REQUEST"/>
         <where>
             <if test="criteria.requestMethod != null and criteria.requestMethod != ''">
-                request_method = #{criteria.requestMethod}
+                request_method=#{criteria.requestMethod}
             </if>
             <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
-                AND request_url like concat('%', #{criteria.requestUrl}, '%')
-            </if>
-            <if test="criteria.queryString != null and criteria.queryString != ''">
-                AND query_string = #{criteria.queryString}
+                OR request_url like concat('%', #{criteria.requestUrl}, '%')
             </if>
         </where>
         <if test="sort != null">
@@ -129,7 +112,7 @@
         </if>
         <choose>
             <when test="page != null">
-                LIMIT ${page.pageNumber}, ${page.pageSize}
+                LIMIT ${page.pageNumber * page.pageSize}, ${page.pageSize}
             </when>
             <otherwise>
                 LIMIT 0, 10
@@ -141,14 +124,11 @@
         SELECT COUNT(ID) AS count
         FROM <include refid="MOCK_REQUEST" />
 		<where>
-			<if test="criteria.url != null and criteria.url != ''">
-				url = #{criteria.url}
-			</if>
-			<if test="criteria.requestMethod != null and criteria.requestMethod != ''">
-				AND request_method = #{criteria.requestMethod}
-			</if>
-            <if test="criteria.queryString != null and criteria.queryString != ''">
-                AND query_string = #{criteria.queryString}
+            <if test="criteria.requestMethod != null and criteria.requestMethod != ''">
+                request_method=#{criteria.requestMethod}
+            </if>
+            <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
+                OR request_url like concat('%', #{criteria.requestUrl}, '%')
             </if>
 		</where>
 	</select>

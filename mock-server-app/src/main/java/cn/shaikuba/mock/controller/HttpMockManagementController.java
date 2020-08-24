@@ -3,6 +3,8 @@ package cn.shaikuba.mock.controller;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.api.ResultVO;
 import cn.shaikuba.mock.data.entity.base.Criteria;
+import cn.shaikuba.mock.data.entity.base.Pageable;
+import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,6 +27,9 @@ public class HttpMockManagementController {
     @Resource(name = "httpMockRequestService")
     private HttpMockRequestService httpMockService;
 
+    @Resource
+    private HttpMockMapper mockMapper;
+
     @GetMapping("/{id}")
     public ResultVO<HttpMockRequest> getMockObj(@PathVariable Long id) {
         HttpMockRequest mockRequest = httpMockService.findMockRequest(id);
@@ -35,17 +39,23 @@ public class HttpMockManagementController {
     }
 
     @PostMapping(value = "list", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResultVO<List<HttpMockRequest>> getMockObjList(@RequestBody Criteria<HttpMockRequest> criteria) {
+    public ResultVO<Pageable<HttpMockRequest>> getMockObjList(@RequestBody Criteria<HttpMockRequest> criteria) {
         List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(criteria);
+        int count = mockMapper.countByCriteria(criteria);
 
-        return ResultVO.<List<HttpMockRequest>>success()
-                .withData(mockRequestList);
+        Pageable<HttpMockRequest> pageable = new Pageable<>();
+        pageable.setDataCount(count);
+        pageable.setElements(mockRequestList);
+
+        ResultVO<Pageable<HttpMockRequest>> resultVO = ResultVO.<Pageable<HttpMockRequest>>success()
+                .withData(pageable);
+        return resultVO;
     }
 
     @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO saveMockRequest(@RequestBody HttpMockRequest mockRequest) {
-        if (isValid(mockRequest)) {
-            return ResultVO.fail("Some required fields' value is empty!");
+        if (!mockRequest.isValid()) {
+            return ResultVO.fail(String.format("Some required fields' value is empty, required non-empty fields: %s!", StringUtils.join(mockRequest.validate())));
         }
         List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(Criteria.newCriteria().<HttpMockRequest>criteria(mockRequest));
         if (CollectionUtils.isEmpty(mockRequestList)) {
@@ -54,14 +64,6 @@ public class HttpMockManagementController {
             httpMockService.updateMockRequest(mockRequest);
         }
         return ResultVO.success("Save Successfully");
-    }
-
-    private boolean isValid(HttpMockRequest mockRequest) {
-        return !StringUtils.isAnyEmpty(mockRequest.getRequestMethod()
-                , mockRequest.getRequestUrl()
-                , mockRequest.getContentType()
-                , mockRequest.getResponseBody())
-                && mockRequest.getStatusCode() > 0;
     }
 
     @PutMapping(value = "update", consumes = MediaType.APPLICATION_JSON_VALUE)
