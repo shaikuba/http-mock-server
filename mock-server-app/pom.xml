@@ -123,17 +123,17 @@
         <finalName>mock-server</finalName>
         <resources>
             <resource>
+                <directory>src/main/vue/dist</directory>
+                <filtering>false</filtering>
+                <targetPath>public/</targetPath>
+            </resource>
+            <resource>
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>META-INF/**/*</include>
                     <include>public/**/*</include>
                 </includes>
                 <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/vue/dist</directory>
-                <filtering>false</filtering>
-                <targetPath>public/</targetPath>
             </resource>
         </resources>
 
