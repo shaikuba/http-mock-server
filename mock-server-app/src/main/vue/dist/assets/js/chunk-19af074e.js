@@ -1,4 +1,4 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["dashboard"],{"22c7":function(t,i,s){},7159:function(t,i,s){t.exports=s.p+"assets/img/img.jpg"},"7ed4":function(t,i,s){"use strict";var a=s("2b0e"),h=new a["default"];i["a"]=h},"8c93":function(t,i,s){var a;
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-19af074e"],{"22c7":function(t,i,s){},7159:function(t,i,s){t.exports=s.p+"assets/img/img.jpg"},"7ed4":function(t,i,s){"use strict";var a=s("2b0e"),h=new a["default"];i["a"]=h},"8c93":function(t,i,s){var a;
 /*!
  * sChart JavaScript Library v2.0.1
  * http://blog.gdfengshuo.com/example/sChart/ | Released under the MIT license
