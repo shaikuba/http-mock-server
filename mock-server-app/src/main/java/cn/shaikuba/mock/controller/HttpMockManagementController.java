@@ -32,7 +32,9 @@ public class HttpMockManagementController {
 
     @GetMapping("/{id}")
     public ResultVO<HttpMockRequest> getMockObj(@PathVariable Long id) {
-        HttpMockRequest mockRequest = httpMockService.findMockRequest(id);
+        HttpMockRequest queryObj = new HttpMockRequest();
+        queryObj.setId(id);
+        HttpMockRequest mockRequest = httpMockService.findMockRequest(queryObj);
         jsonBodyFormat(mockRequest);
         return ResultVO.<HttpMockRequest>success()
                 .withData(mockRequest);
@@ -57,8 +59,8 @@ public class HttpMockManagementController {
         if (!mockRequest.isValid()) {
             return ResultVO.fail(String.format("Some required fields' value is empty, required non-empty fields: %s!", StringUtils.join(mockRequest.validate())));
         }
-        List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(Criteria.newCriteria().<HttpMockRequest>criteria(mockRequest));
-        if (CollectionUtils.isEmpty(mockRequestList)) {
+        boolean exist = httpMockService.findMockRequest(mockRequest) != null;
+        if (!exist) {
             httpMockService.saveMockRequest(mockRequest);
         } else {
             httpMockService.updateMockRequest(mockRequest);
@@ -77,7 +79,7 @@ public class HttpMockManagementController {
         mockRequest.setResponseBody(JSON.parseObject(mockRequest.getResponseBody()).toJSONString());
     }
 
-    @DeleteMapping(params = "idList")
+    @DeleteMapping(value = "delete", params = "idList")
     public ResultVO deleteMockRequest(@RequestParam String idList) {
         String[] ids = idList.split(",");
 

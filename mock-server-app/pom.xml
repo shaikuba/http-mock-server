@@ -124,8 +124,8 @@
         <resources>
             <resource>
                 <directory>src/main/vue/dist</directory>
-                <filtering>false</filtering>
                 <targetPath>public/</targetPath>
+                <filtering>false</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>

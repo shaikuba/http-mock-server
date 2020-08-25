@@ -86,12 +86,18 @@
         </where>
     </update>
 
-    <select id="findOne" resultMap="MockRequestMap" parameterType="java.lang.Long">
+    <select id="findOne" resultMap="MockRequestMap" parameterType="HttpMockRequest">
         SELECT * FROM
         <include refid="MOCK_REQUEST"/>
         <where>
             <if test="id != null and id != ''">
                 id = #{id}
+            </if>
+            <if test="requestMethod != null and requestMethod != ''">
+                AND request_method=#{requestMethod}
+            </if>
+            <if test="requestUrl != null and requestUrl != ''">
+                AND request_url=#{requestUrl}
             </if>
         </where>
     </select>

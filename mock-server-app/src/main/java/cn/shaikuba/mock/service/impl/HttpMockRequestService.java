@@ -36,8 +36,8 @@ public class HttpMockRequestService implements MockRequestService<HttpMockReques
     }
 
     @Override
-    public HttpMockRequest findMockRequest(Long mockRequestId) {
-        return mockMapper.findOne(mockRequestId);
+    public HttpMockRequest findMockRequest(HttpMockRequest mockRequest) {
+        return mockMapper.findOne(mockRequest);
     }
 
     @Override

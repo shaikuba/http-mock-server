@@ -42,6 +42,8 @@ public interface CrudRepository<T, ID extends Serializable> {
      */
     T findOne(ID id);
 
+    <S extends T> T findOne(S entity);
+
     /**
      * Returns whether an entity with the given id exists.
      *

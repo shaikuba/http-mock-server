@@ -1,6 +1,7 @@
 package cn.shaikuba.mock.service;
 
 import cn.shaikuba.mock.common.process.entity.MockRequest;
+import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.BaseEntity;
 import cn.shaikuba.mock.data.entity.base.Criteria;
 
@@ -14,7 +15,7 @@ public interface MockRequestService<T extends BaseEntity & MockRequest> {
 
     void updateMockRequest(T mockRequest);
 
-    T findMockRequest(Long mockRequestId);
+    T findMockRequest(T mockRequest);
 
     <C>List<T> findMockRequests(Criteria<C> criteria);
 }
