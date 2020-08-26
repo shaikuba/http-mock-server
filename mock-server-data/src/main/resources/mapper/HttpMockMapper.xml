@@ -99,6 +99,9 @@
             <if test="requestUrl != null and requestUrl != ''">
                 AND request_url=#{requestUrl}
             </if>
+            <if test="queryString != null and queryString != ''">
+                AND query_string=#{queryString}
+            </if>
         </where>
     </select>
 

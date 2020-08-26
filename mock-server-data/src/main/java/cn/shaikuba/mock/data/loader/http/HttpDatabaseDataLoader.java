@@ -23,15 +23,9 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
     @Override
     public HttpMockRequest load(HttpMockRequest mockRequest) {
 
-        List<HttpMockRequest> mockRequestList = mockMapper.findAll(Criteria.<HttpMockRequest>newCriteria()
-                .criteria(mockRequest)
-        );
+        HttpMockRequest foundMockRequest = mockMapper.findOne(mockRequest);
 
-        if (mockRequestList != null && mockRequestList.size() != 0) {
-            return mockRequestList.get(0);
-        }
-
-        return null;
+        return foundMockRequest;
     }
 
 }
