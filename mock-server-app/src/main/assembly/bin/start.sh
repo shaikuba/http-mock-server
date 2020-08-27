@@ -11,7 +11,7 @@ SAF_PIDPATH="$BASEBIN_DIR"
 
 GC_DATE=`date +%Y-%m-%d-%H-%M`
 
-LOG_PATH="/data/mock-server/logs"
+LOG_PATH="/data/http-mock-server/logs"
 
 JVM_FILE="-XX:+UseCondCardMark -XX:+UseConcMarkSweepGC -XX:CMSWaitDuration=250"
 JVM_FILE="$JVM_FILE -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:${LOG_PATH}/gc-${GC_DATE}.log -XX:ErrorFile=${LOG_PATH}/hs_err_pid%p-${GC_DATE}.log"
@@ -60,7 +60,7 @@ fi
 
 # ------ set CLASSPATH
 CLASSPATH="$BASEDIR"/conf/:"$BASEDIR"/lib/*
-MAINCLASS=MockServerApplication
+MAINCLASS=cn.shaikuba.mock.MockServerApplication
 echo "$CLASSPATH"
 
 # DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006"
@@ -72,7 +72,7 @@ nohup "$JAVACMD" $JAVA_OPTS \
   -Dbasedir="$BASEDIR" \
   -Dfile.encoding="UTF-8" \
   $MAINCLASS \
-  > /dev/null &
+  > $LOG_PATH/javacmd.out &
 
 
 # ------ wirte pid to file

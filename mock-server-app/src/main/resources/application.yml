@@ -1,7 +1,7 @@
 ##### spring #####
 spring:
   profiles:
-    active: dev
+    active: prod
   output:
     ansi:
       enabled: always

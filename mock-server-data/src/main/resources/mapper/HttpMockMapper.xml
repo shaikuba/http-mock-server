@@ -13,7 +13,7 @@
         <result column="request_body" property="requestBody"/>
         <result column="request_headers" property="requestHeaders"/>
         <result column="response_headers" property="responseHeaders"/>
-        <result column="response_body" property="responseBody"/>
+        <result column="response_body" property="responseBody" jdbcType="LONGVARCHAR"/>
         <result column="status_code" property="statusCode"/>
         <result column="description" property="description"/>
         <result column="create_time" property="createTime"/>
