@@ -26,6 +26,8 @@
         <jdk.version>1.8</jdk.version>
         <logback.version>1.2.3</logback.version>
         <rest-assured.version>4.3.1</rest-assured.version>
+
+        <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -34,7 +36,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.2.4.RELEASE</version>
+                <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
