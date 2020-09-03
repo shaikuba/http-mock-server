@@ -15,8 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthorizationController {
 
-    @GetMapping("/basic")
+    @GetMapping("/basic/test")
     public String basicTest() {
         return "Welcome to Basic Authentication Test Page";
     }
+
+    @GetMapping("/digest/test")
+    public String digestTest() {
+        return "Welcome to Digest Authentication Test Page";
+    }
+
 }
