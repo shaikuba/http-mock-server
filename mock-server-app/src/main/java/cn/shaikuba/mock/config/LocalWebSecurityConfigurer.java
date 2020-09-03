@@ -22,24 +22,6 @@ import java.util.List;
 public class LocalWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-////        http
-////                .requiresChannel()
-////                .anyRequest()
-////                .requiresSecure()
-////                .and()
-////                .authorizeRequests()
-////                .antMatchers("/**")
-////                .permitAll();
-//
-//        http.authorizeRequests()
-//                .anyRequest()
-//                .fullyAuthenticated()
-//                .and()
-//                .formLogin();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
