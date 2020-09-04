@@ -78,12 +78,14 @@
         </dependency>
 
         <!-- support for hot deploy spring-boot application, refer to https://blog.csdn.net/qq_42685050/article/details/81588584 -->
+<!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
             <scope>true</scope>
         </dependency>
+-->
 
         <dependency>
             <groupId>commons-io</groupId>
