@@ -1,9 +1,11 @@
 package cn.shaikuba.mock.controller;
 
 import cn.shaikuba.mock.common.util.CollectionUtils;
+import cn.shaikuba.mock.data.entity.BehaviorDescription;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
-import cn.shaikuba.mock.data.entity.base.Criteria;
 import cn.shaikuba.mock.service.HttpMockCacheService;
+import cn.shaikuba.mock.service.behavior.BehaviorServiceRegister;
+import cn.shaikuba.mock.service.behavior.WaitBehaviorService;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -45,19 +47,16 @@ public class HttpMockRequestController {
 
         try {
             HttpMockRequest mockRequest = objectConverter(httpRequest);
-//            Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
-//                    .criteria(mockRequest);
-//            List<HttpMockRequest> mockRequestList = mockRequestService.<HttpMockRequest>findMockRequests(criteria);
-//            if (mockRequestList.size() == 0) {
-//                serviceNotFound(httpResponse);
-//                return;
-//            }
-//            HttpMockRequest mockResponse = mockRequestList.get(0);
 
             HttpMockRequest mockResponse = httpMockCacheService.handle(mockRequest);
             httpResponse.setStatus(mockResponse.getStatusCode());
             httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).toString());
             httpResponse.setCharacterEncoding("UTF-8");
+
+            BehaviorDescription behaviorDescription = mockResponse.getMockBehavior();
+            BehaviorServiceRegister serviceAction = new BehaviorServiceRegister(behaviorDescription);
+            new WaitBehaviorService(serviceAction);
+            serviceAction.action();
 
             if (StringUtils.isNotEmpty(mockResponse.getResponseBody())) {
                 PrintWriter printWriter = httpResponse.getWriter();

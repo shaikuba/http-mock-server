@@ -46,7 +46,6 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
 
     private String description;
 
-
     public boolean isValid() {
         return validate().length == 0;
     }
@@ -68,5 +67,9 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
                 .collect(Collectors.toList())
                 .toArray(new String[]{});
 
+    }
+
+    public BehaviorDescription getMockBehavior() {
+        return BehaviorDescription.genBehavior(this.description);
     }
 }
