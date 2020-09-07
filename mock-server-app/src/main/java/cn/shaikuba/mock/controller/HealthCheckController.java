@@ -2,6 +2,7 @@ package cn.shaikuba.mock.controller;
 
 import cn.shaikuba.mock.TestPeople;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +16,12 @@ import java.util.Map;
 @RestController
 public class HealthCheckController {
 
+    @Autowired
+    private TestPeople testPeople;
+
     @PostConstruct
     public void init() {
-        new TestPeople().sayHello();
+        testPeople.sayHello();
     }
 
     @GetMapping(value = "/health")
