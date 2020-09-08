@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration name="MOCK-SERVER" status="WARN" monitorInterval="30">
     <Properties>
-<!--        <property name="LOG_HOME">C:/logs</property>-->
-        <property name="LOG_HOME">/data/http-mock-server/logs</property>
+        <property name="LOG_HOME">C:/logs</property>
+<!--        <property name="LOG_HOME">/data/http-mock-server/logs</property>-->
         <property name="FILENAME">http-mock-server</property>
         <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t-%L] %-5level %logger{36} - %msg%n</property>
     </Properties>
@@ -32,15 +32,15 @@
     </Appenders>
 
     <Loggers>
-        <logger name="org.apache.http" level="debug" />
-        <logger name="org.springframework" level="debug" />
-        <logger name="org.mybatis" level="debug" />
-        <logger name="org.springframework.core" level="debug" />
-        <logger name="org.springframework.beans" level="debug" />
-        <logger name="org.springframework.context" level="debug" />
-        <logger name="org.springframework.web" level="debug" />
-        <logger name="org.mongodb.driver" level="info" />
-        <logger name="org.hibernate.validator" level="info" />
+        <logger name="org.apache.http" level="INFO" />
+        <logger name="org.springframework" level="INFO" />
+        <logger name="org.mybatis" level="INFO" />
+        <logger name="org.springframework.core" level="INFO" />
+        <logger name="org.springframework.beans" level="INFO" />
+        <logger name="org.springframework.context" level="INFO" />
+        <logger name="org.springframework.web" level="INFO" />
+        <logger name="org.mongodb.driver" level="INFO" />
+        <logger name="org.hibernate.validator" level="INFO" />
 
         <Root level="INFO">
             <AppenderRef ref="ASYNC"/>
