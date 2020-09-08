@@ -54,9 +54,11 @@ public class HttpMockRequestController {
             httpResponse.setCharacterEncoding("UTF-8");
 
             BehaviorDescription behaviorDescription = mockResponse.getMockBehavior();
-            BehaviorServiceRegister serviceAction = new BehaviorServiceRegister(behaviorDescription);
-            new WaitBehaviorService(serviceAction);
-            serviceAction.action();
+            if (behaviorDescription != null) {
+                BehaviorServiceRegister serviceAction = new BehaviorServiceRegister(behaviorDescription);
+                new WaitBehaviorService(serviceAction);
+                serviceAction.action();
+            }
 
             if (StringUtils.isNotEmpty(mockResponse.getResponseBody())) {
                 PrintWriter printWriter = httpResponse.getWriter();

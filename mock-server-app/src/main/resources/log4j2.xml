@@ -2,8 +2,8 @@
 <Configuration name="MOCK-SERVER" status="WARN" monitorInterval="30">
     <Properties>
 <!--        <property name="LOG_HOME">C:/logs</property>-->
-        <property name="LOG_HOME">/data/mock-server/logs</property>
-        <property name="FILENAME">mock-server</property>
+        <property name="LOG_HOME">/data/http-mock-server/logs</property>
+        <property name="FILENAME">http-mock-server</property>
         <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t-%L] %-5level %logger{36} - %msg%n</property>
     </Properties>
 
@@ -42,7 +42,7 @@
         <logger name="org.mongodb.driver" level="info" />
         <logger name="org.hibernate.validator" level="info" />
 
-        <Root level="debug">
+        <Root level="INFO">
             <AppenderRef ref="ASYNC"/>
         </Root>
 

@@ -72,7 +72,7 @@ nohup "$JAVACMD" $JAVA_OPTS \
   -Dbasedir="$BASEDIR" \
   -Dfile.encoding="UTF-8" \
   $MAINCLASS \
-  > $LOG_PATH/javacmd.out &
+  > /dev/null &
 
 
 # ------ wirte pid to file
