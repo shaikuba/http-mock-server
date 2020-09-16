@@ -17,7 +17,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spring.boot.mainClass>cn.shaikuba.mock.MockServerApplication</spring.boot.mainClass>
+        <spring.boot.mainClass>cn.shaikuba.mock.MockServerHttpApplication</spring.boot.mainClass>
     </properties>
 
     <dependencies>

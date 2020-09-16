@@ -15,10 +15,10 @@ import org.springframework.context.annotation.PropertySource;
 //@EnableCaching
 @MapperScan({"cn.shaikuba.mock.data.mybatis.mapper"})
 @SpringBootApplication
-public class MockServerApplication {
+public class MockServerHttpApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MockServerApplication.class, args);
+        SpringApplication.run(MockServerHttpApplication.class, args);
     }
 
 }

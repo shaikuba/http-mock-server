@@ -4,15 +4,20 @@ BASEDIR=`dirname $0`/..
 BASEDIR=`(cd "$BASEDIR"; pwd)`
 echo current path:$BASEDIR
 
+# ------ set CLASSPATH
+CLASSPATH="$BASEDIR"/conf/:"$BASEDIR"/lib/*
+echo "$CLASSPATH"
+MAINCLASS=cn.shaikuba.mock.MockServerHttpApplication
+
 BASEBIN_DIR=$BASEDIR"/bin"
 cd $BASEBIN_DIR
+
+# DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006"
 
 SAF_PIDPATH="$BASEBIN_DIR"
 
 GC_DATE=`date +%Y-%m-%d-%H-%M`
-
-LOG_PATH="/data/http-mock-server/logs"
-
+LOG_PATH="/data/mock-server/mock-server-http/logs"
 JVM_FILE="-XX:+UseCondCardMark -XX:+UseConcMarkSweepGC -XX:CMSWaitDuration=250"
 JVM_FILE="$JVM_FILE -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:${LOG_PATH}/gc-${GC_DATE}.log -XX:ErrorFile=${LOG_PATH}/hs_err_pid%p-${GC_DATE}.log"
 JVM_FILE="$JVM_FILE -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=10M"
@@ -57,13 +62,6 @@ fi
 if [ -z "$OPTS_MEMORY" ] ; then
     OPTS_MEMORY="-server -Xms2048m -Xmx2048m -XX:MaxDirectMemorySize=96M -Dio.netty.allocator.type=pooled -Dio.netty.allocator.tinyCacheSize=0 -Dio.netty.allocator.smallCacheSize=0 -Dio.netty.allocator.normalCacheSize=0"
 fi
-
-# ------ set CLASSPATH
-CLASSPATH="$BASEDIR"/conf/:"$BASEDIR"/lib/*
-MAINCLASS=cn.shaikuba.mock.MockServerApplication
-echo "$CLASSPATH"
-
-# DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006"
 
 # ------ run proxy
 nohup "$JAVACMD" $JAVA_OPTS \
