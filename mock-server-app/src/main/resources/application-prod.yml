@@ -30,10 +30,6 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       #filters: stat,wall,log4j,config # wall: firewall, filters used to statistic the data for display on monitor page
 
-  devtools:
-    livereload:
-      enabled: true
-
 #  ldap:
 #    embedded:
 #      ldif: classpath:ldap/ldap-test-server.ldif

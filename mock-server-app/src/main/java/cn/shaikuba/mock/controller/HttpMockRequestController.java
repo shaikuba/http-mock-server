@@ -37,11 +37,14 @@ public class HttpMockRequestController {
     @Autowired
     private HttpMockCacheService httpMockCacheService;
 
-    @RequestMapping(value = "/api/**", consumes = {MediaType.APPLICATION_JSON_VALUE
+    @RequestMapping(value = "/api/**", consumes = {
+            MediaType.ALL_VALUE
+            , MediaType.APPLICATION_JSON_VALUE
             , MediaType.TEXT_PLAIN_VALUE
             , MediaType.APPLICATION_FORM_URLENCODED_VALUE
             , MediaType.APPLICATION_XHTML_XML_VALUE
             , MediaType.APPLICATION_XML_VALUE
+
     })
     public void getMockObj(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
 
