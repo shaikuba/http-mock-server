@@ -2,7 +2,7 @@ package cn.shaikuba.mock.data.entity;
 
 import cn.shaikuba.mock.common.process.entity.MockRequest;
 import cn.shaikuba.mock.common.process.entity.MockResponse;
-import cn.shaikuba.mock.data.annoation.MockFiled;
+import cn.shaikuba.mock.data.annoation.MockField;
 import cn.shaikuba.mock.data.entity.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,10 +23,10 @@ import static cn.shaikuba.mock.common.util.NoOp.noOp;
 @Data
 public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements MockRequest, MockResponse {
 
-    @MockFiled(required = true)
+    @MockField(required = true)
     private String requestUrl;
 
-    @MockFiled(required = true)
+    @MockField(required = true)
     private String requestMethod;
 
     private String queryString;
@@ -34,14 +34,14 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     private String requestHeaders;
     private String requestBody;
 
-    @MockFiled(required = true)
+    @MockField(required = true)
     private Integer statusCode;
     private String responseHeaders;
 
-    @MockFiled(required = true)
+    @MockField(required = true)
     private String responseBody;
 
-    @MockFiled(required = true)
+    @MockField(required = true)
     private String contentType;
 
     private String description;
@@ -54,8 +54,8 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
         return Stream.of(this.getClass().getDeclaredFields())
                 .filter(field -> {
                             try {
-                                return field.getAnnotation(MockFiled.class) != null
-                                        && field.getAnnotation(MockFiled.class).required()
+                                return field.getAnnotation(MockField.class) != null
+                                        && field.getAnnotation(MockField.class).required()
                                         && (field.get(this) == null || StringUtils.isEmpty(field.get(this).toString()));
                             } catch (IllegalAccessException e) {
                                 noOp();

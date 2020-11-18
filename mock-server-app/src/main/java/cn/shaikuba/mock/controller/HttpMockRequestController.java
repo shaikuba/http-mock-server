@@ -5,7 +5,6 @@ import cn.shaikuba.mock.data.entity.BehaviorDescription;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.service.HttpMockCacheService;
 import cn.shaikuba.mock.service.behavior.BehaviorServiceRegister;
-import cn.shaikuba.mock.service.behavior.WaitBehaviorService;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +36,9 @@ public class HttpMockRequestController {
     @Autowired
     private HttpMockCacheService httpMockCacheService;
 
+    @Autowired
+    private BehaviorServiceRegister behaviorServiceRegister;
+
     @RequestMapping(value = "/api/**", consumes = {
             MediaType.ALL_VALUE
             , MediaType.APPLICATION_JSON_VALUE
@@ -58,9 +60,7 @@ public class HttpMockRequestController {
 
             BehaviorDescription behaviorDescription = mockResponse.getMockBehavior();
             if (behaviorDescription != null) {
-                BehaviorServiceRegister serviceAction = new BehaviorServiceRegister(behaviorDescription);
-                new WaitBehaviorService(serviceAction);
-                serviceAction.action();
+                behaviorServiceRegister.action(behaviorDescription);
             }
 
             if (StringUtils.isNotEmpty(mockResponse.getResponseBody())) {
@@ -83,7 +83,7 @@ public class HttpMockRequestController {
     private HttpMockRequest objectConverter(HttpServletRequest servletRequest) throws IOException {
         HttpMockRequest.HttpMockRequestBuilder mockRequestBuilder = HttpMockRequest.builder()
                 .requestMethod(servletRequest.getMethod())
-                .requestUrl(servletRequest.getRequestURI().substring(servletRequest.getRequestURI().lastIndexOf("api")+3))
+                .requestUrl(servletRequest.getRequestURI().substring(servletRequest.getRequestURI().lastIndexOf("api") + 3))
                 .queryString(servletRequest.getQueryString())
                 .formData(servletRequest.getQueryString());
 

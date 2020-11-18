@@ -7,13 +7,13 @@ import java.lang.annotation.Target;
 
 /**
  * @author Ray.Xu
- * @classname MockFiled
+ * @classname MockField
  * @description TODO
  * @date 8/24/2020 1:22 PM
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MockFiled {
+public @interface MockField {
 
     String value() default "";
 

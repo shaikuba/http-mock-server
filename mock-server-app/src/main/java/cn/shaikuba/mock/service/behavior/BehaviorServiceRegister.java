@@ -2,6 +2,7 @@ package cn.shaikuba.mock.service.behavior;
 
 import cn.shaikuba.mock.data.entity.BehaviorDescription;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,17 +14,12 @@ import java.util.List;
  * @date 9/4/2020 1:35 PM
  */
 @Slf4j
+@Service
 public class BehaviorServiceRegister {
 
     private List<BehaviorService> behaviorServiceList = new ArrayList<>();
 
-    private BehaviorDescription description;
-
-    public BehaviorServiceRegister(BehaviorDescription description) {
-        this.description = description;
-    }
-
-    public void action() {
+    public void action(BehaviorDescription description) {
         behaviorServiceList.stream().forEach(behaviorService -> behaviorService.action(description));
     }
 

@@ -14,6 +14,7 @@ public class BehaviorDescription {
 
     private Long await = 0l; // time in milliseconds
 
+    private MockCallbackRequest mockCallback;
 
     public static BehaviorDescription genBehavior(String description) {
         BehaviorDescription behaviorDescription = null;
