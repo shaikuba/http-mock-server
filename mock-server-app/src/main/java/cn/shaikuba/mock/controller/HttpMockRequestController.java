@@ -52,7 +52,10 @@ public class HttpMockRequestController {
 
         try {
             HttpMockRequest mockRequest = objectConverter(httpRequest);
-
+            if (mockRequest.validateMockRequest().size() > 0) {
+                serviceNotFound(httpResponse);
+                return;
+            }
             HttpMockRequest mockResponse = httpMockCacheService.handle(mockRequest);
             httpResponse.setStatus(mockResponse.getStatusCode());
             httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).toString());
@@ -83,7 +86,7 @@ public class HttpMockRequestController {
     private HttpMockRequest objectConverter(HttpServletRequest servletRequest) throws IOException {
         HttpMockRequest.HttpMockRequestBuilder mockRequestBuilder = HttpMockRequest.builder()
                 .requestMethod(servletRequest.getMethod())
-                .requestUrl(servletRequest.getRequestURI().substring(servletRequest.getRequestURI().lastIndexOf("api") + 3))
+                .requestUrl(servletRequest.getRequestURI().substring(servletRequest.getRequestURI().indexOf("api") + 3))
                 .queryString(servletRequest.getQueryString())
                 .formData(servletRequest.getQueryString());
 

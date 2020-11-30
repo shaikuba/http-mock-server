@@ -11,6 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.constraints.Pattern;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,9 +28,13 @@ import static cn.shaikuba.mock.common.util.NoOp.noOp;
 @Data
 public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements MockRequest, MockResponse {
 
+    private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+    @Pattern(regexp = "/.+", message = "Request url should start with char '/'")
     @MockField(required = true)
     private String requestUrl;
 
+    @Pattern(regexp = "(GET|POST|PUT|DELETE)", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Support request method: get, post, put, delete")
     @MockField(required = true)
     private String requestMethod;
 
@@ -46,10 +55,19 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
 
     private String description;
 
+    public Set<ConstraintViolation<HttpMockRequest>> validateMockRequest() {
+        return validator.validate(this);
+    }
+
     public boolean isValid() {
         return validate().length == 0;
     }
 
+    /**
+     * Validate required fields for creating mock request and mock response
+     *
+     * @return Fields validate failed
+     */
     public String[] validate() {
         return Stream.of(this.getClass().getDeclaredFields())
                 .filter(field -> {
@@ -72,4 +90,5 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     public BehaviorDescription getMockBehavior() {
         return BehaviorDescription.genBehavior(this.description);
     }
+
 }
