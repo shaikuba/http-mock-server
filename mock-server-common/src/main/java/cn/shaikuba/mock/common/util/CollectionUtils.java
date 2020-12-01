@@ -198,4 +198,12 @@ public abstract class CollectionUtils {
         return v;
     }
 
+    public static boolean isEmpty(Map map) {
+        return map != null && !map.isEmpty();
+    }
+
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection != null && !collection.isEmpty();
+    }
+
 }

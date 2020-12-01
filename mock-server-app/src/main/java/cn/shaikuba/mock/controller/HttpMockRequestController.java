@@ -1,7 +1,7 @@
 package cn.shaikuba.mock.controller;
 
 import cn.shaikuba.mock.common.util.CollectionUtils;
-import cn.shaikuba.mock.data.entity.BehaviorDescription;
+import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.service.HttpMockCacheService;
 import cn.shaikuba.mock.service.behavior.BehaviorServiceRegister;
@@ -57,9 +57,14 @@ public class HttpMockRequestController {
                 return;
             }
             HttpMockRequest mockResponse = httpMockCacheService.handle(mockRequest);
+            if (mockResponse == null) {
+                serviceNotFound(httpResponse);
+                return;
+            }
             httpResponse.setStatus(mockResponse.getStatusCode());
+            // application/json or application/xml
             httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).toString());
-            httpResponse.setCharacterEncoding("UTF-8");
+            //httpResponse.setCharacterEncoding("UTF-8"); // instead of invoking setContentType("application/json;charset=gbk")
 
             BehaviorDescription behaviorDescription = mockResponse.getMockBehavior();
             if (behaviorDescription != null) {

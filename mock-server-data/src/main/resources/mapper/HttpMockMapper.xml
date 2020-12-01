@@ -99,8 +99,21 @@
             <if test="requestUrl != null and requestUrl != ''">
                 AND request_url=#{requestUrl}
             </if>
-            <if test="queryString != null and queryString != ''">
-                AND query_string=#{queryString}
+        </where>
+    </select>
+
+    <select id="findAllByUrlAndMethod" resultMap="MockRequestMap" parameterType="HttpMockRequest">
+        SELECT * FROM
+        <include refid="MOCK_REQUEST"/>
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="requestMethod != null and requestMethod != ''">
+                AND request_method=#{requestMethod}
+            </if>
+            <if test="requestUrl != null and requestUrl != ''">
+                AND request_url=#{requestUrl}
             </if>
         </where>
     </select>

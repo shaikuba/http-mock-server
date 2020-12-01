@@ -1,4 +1,4 @@
-package cn.shaikuba.mock.service.behavior.message;
+package cn.shaikuba.mock.data.loader.message;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
@@ -8,22 +8,27 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class JsonMessageConverter implements MessageConverter<String, String> {
+public class JsonMessageConverter implements MessageConverter<String, JSONObject> {
     @Override
-    public boolean isSupport(MessageType messageType) {
-        return MessageType.JSON.equals(messageType);
+    public boolean isSupport(String message) {
+        return convert(message) != null;
     }
 
     @Override
-    public String convert(String origin) {
+    public JSONObject convert(String origin) {
 
         try {
             JSONObject jsonObject = JSON.parseObject(origin);
-            return jsonObject.toJSONString();
+            return jsonObject;
         } catch (JSONException e) {
             log.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    @Override
+    public String format(String origin) {
+        return convert(origin).toJSONString();
     }
 
 }

@@ -1,11 +1,11 @@
 package cn.shaikuba.mock.service.behavior;
 
-import cn.shaikuba.mock.config.ApplicationContextHelper;
-import cn.shaikuba.mock.data.entity.BehaviorDescription;
-import cn.shaikuba.mock.data.entity.MockCallbackRequest;
+import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
+import cn.shaikuba.mock.data.entity.description.MockCallbackRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +28,13 @@ import java.util.Set;
 @Service
 public class CallbackBehaviorService extends AbstractBehaviorService<BehaviorDescription> {
 
+    @Qualifier("callbackTaskExecutor")
+    @Autowired
+    private ThreadPoolTaskExecutor callbackTaskExecutor;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Autowired
     public CallbackBehaviorService(BehaviorServiceRegister serviceRegister) {
         super(serviceRegister);
@@ -48,8 +55,7 @@ public class CallbackBehaviorService extends AbstractBehaviorService<BehaviorDes
             return;
         }
 
-        ApplicationContextHelper.getBean("callbackTaskExecutor", ThreadPoolTaskExecutor.class)
-                .execute(new CallbackExecutor(callbackRequest));
+        callbackTaskExecutor.execute(new CallbackExecutor(callbackRequest));
     }
 
     private class CallbackExecutor implements Runnable {
@@ -100,7 +106,7 @@ public class CallbackBehaviorService extends AbstractBehaviorService<BehaviorDes
                 httpEntity = new HttpEntity<>(callbackRequest.getRequestBody());
             }
 
-            ResponseEntity<Map> responseEntity = ApplicationContextHelper.getBean(RestTemplate.class)
+            ResponseEntity<Map> responseEntity = CallbackBehaviorService.this.restTemplate
                     .exchange(callbackRequest.getUrl()
                             , HttpMethod.resolve(callbackRequest.getMethod())
                             , httpEntity

@@ -1,6 +1,6 @@
 package cn.shaikuba.mock.service.behavior;
 
-import cn.shaikuba.mock.data.entity.BehaviorDescription;
+import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

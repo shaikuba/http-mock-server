@@ -4,6 +4,10 @@ import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.mybatis.mapper.base.CommonMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface HttpMockMapper extends CommonMapper<HttpMockRequest> {
+
+    List<HttpMockRequest> findAllByUrlAndMethod(HttpMockRequest mockRequest);
 }

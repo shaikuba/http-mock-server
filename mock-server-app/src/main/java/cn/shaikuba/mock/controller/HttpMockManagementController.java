@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -57,7 +56,7 @@ public class HttpMockManagementController {
     @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO saveMockRequest(@RequestBody HttpMockRequest mockRequest) {
         if (!mockRequest.isValid()) {
-            return ResultVO.fail(String.format("Some required fields' value is empty, required non-empty fields: %s!", StringUtils.join(mockRequest.validate())));
+            return ResultVO.fail(String.format("Some required fields' value is empty, required non-empty fields: %s!", StringUtils.join(mockRequest.validateCreateMockRequest())));
         }
         boolean exist = httpMockService.findMockRequest(mockRequest) != null;
         if (!exist) {

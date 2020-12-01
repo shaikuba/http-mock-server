@@ -4,6 +4,7 @@ import cn.shaikuba.mock.common.process.entity.MockRequest;
 import cn.shaikuba.mock.common.process.entity.MockResponse;
 import cn.shaikuba.mock.data.annoation.MockField;
 import cn.shaikuba.mock.data.entity.base.BaseEntity;
+import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,6 +44,7 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     private String requestHeaders;
     private String requestBody;
 
+    // mock response message
     @MockField(required = true)
     private Integer statusCode;
     private String responseHeaders;
@@ -60,7 +62,7 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     }
 
     public boolean isValid() {
-        return validate().length == 0;
+        return validateCreateMockRequest().length == 0;
     }
 
     /**
@@ -68,7 +70,7 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
      *
      * @return Fields validate failed
      */
-    public String[] validate() {
+    public String[] validateCreateMockRequest() {
         return Stream.of(this.getClass().getDeclaredFields())
                 .filter(field -> {
                             try {

@@ -1,6 +1,6 @@
 package cn.shaikuba.mock.service.behavior;
 
-import cn.shaikuba.mock.data.entity.BehaviorDescription;
+import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class BehaviorServiceRegister {
+
 
     private List<BehaviorService> behaviorServiceList = new ArrayList<>();
 

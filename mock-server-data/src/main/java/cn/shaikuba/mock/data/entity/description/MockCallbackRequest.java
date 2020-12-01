@@ -1,4 +1,4 @@
-package cn.shaikuba.mock.data.entity;
+package cn.shaikuba.mock.data.entity.description;
 
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class MockCallbackRequest {
 
     private String requestBody;
 
-    private String contentType;
+//    private String contentType;
 
     private AdvancedBehavior advancedBehavior;
 
