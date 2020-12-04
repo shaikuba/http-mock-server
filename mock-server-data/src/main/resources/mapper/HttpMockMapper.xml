@@ -131,7 +131,7 @@
                 request_method=#{criteria.requestMethod}
             </if>
             <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
-                OR request_url like concat('%', #{criteria.requestUrl}, '%')
+                AND request_url like concat('%', #{criteria.requestUrl}, '%')
             </if>
         </where>
         <if test="sort != null">
@@ -155,7 +155,7 @@
                 request_method=#{criteria.requestMethod}
             </if>
             <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
-                OR request_url like concat('%', #{criteria.requestUrl}, '%')
+                AND request_url like concat('%', #{criteria.requestUrl}, '%')
             </if>
 		</where>
 	</select>
