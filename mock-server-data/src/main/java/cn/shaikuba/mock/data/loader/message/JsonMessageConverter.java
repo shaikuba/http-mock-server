@@ -21,7 +21,7 @@ public class JsonMessageConverter implements MessageConverter<String, JSONObject
             JSONObject jsonObject = JSON.parseObject(origin);
             return jsonObject;
         } catch (JSONException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
         }
         return null;
     }

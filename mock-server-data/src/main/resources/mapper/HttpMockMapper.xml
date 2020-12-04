@@ -5,6 +5,7 @@
     <resultMap id="MockRequestMap"
                type="cn.shaikuba.mock.data.entity.HttpMockRequest">
         <id column="id" property="id"/>
+        <result column="title" property="title"/>
         <result column="request_url" property="requestUrl"/>
         <result column="query_string" property="queryString"/>
         <result column="request_method" property="requestMethod"/>
@@ -25,6 +26,7 @@
 	</sql>
 
     <sql id="MOCK_REQUEST_COLUMNS">
+        `title`,
         `request_url`, `query_string`,  `request_method`, `form_data`, `content_type`, `request_body`, `request_headers`,
         `response_headers`, `response_body`
         , `status_code`, `description`, `create_time`, `update_time`
@@ -34,12 +36,15 @@
         INSERT INTO <include refid="MOCK_REQUEST" />
             (<include refid="MOCK_REQUEST_COLUMNS" />)
         VALUES
-        (#{requestUrl}, #{queryString}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
+        (#{title}, #{requestUrl}, #{queryString}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
     </insert>
     
     <update id="update">
         UPDATE <include refid="MOCK_REQUEST" />
         <set>
+            <if test="title != null and title != ''">
+                title=#{title},
+            </if>
             <if test="queryString != null and queryString != ''">
                 query_string=#{queryString},
             </if>

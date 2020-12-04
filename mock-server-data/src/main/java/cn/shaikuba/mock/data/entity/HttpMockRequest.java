@@ -31,6 +31,8 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
 
     private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+    private String title;
+
     @Pattern(regexp = "/.+", message = "Request url should start with char '/'")
     @MockField(required = true)
     private String requestUrl;

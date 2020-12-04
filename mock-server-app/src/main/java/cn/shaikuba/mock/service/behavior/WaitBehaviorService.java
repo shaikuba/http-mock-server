@@ -1,6 +1,7 @@
 package cn.shaikuba.mock.service.behavior;
 
 import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @description Simulate the service delay to response client
  * @date 9/4/2020 1:45 PM
  */
+@Slf4j
 @Service
 public class WaitBehaviorService extends AbstractBehaviorService<BehaviorDescription> {
 
@@ -26,9 +28,11 @@ public class WaitBehaviorService extends AbstractBehaviorService<BehaviorDescrip
     private void needWait(long timeoutInMills) {
         if (timeoutInMills != 0) {
             try {
+                log.info("Mock behavior to wait: {}ms", timeoutInMills);
                 synchronized (this) {
-                    Thread.currentThread().wait(timeoutInMills);
+                    this.wait(timeoutInMills);
                 }
+                log.info("Mock behavior wait complete");
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

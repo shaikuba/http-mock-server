@@ -23,7 +23,7 @@ public class XmlMessageConverter implements MessageConverter<String, Document> {
                 return document;
             }
         } catch (DocumentException e) {
-            log.error(e.getMessage(), e);
+            log.error(e.getMessage());
         }
 
         return null;

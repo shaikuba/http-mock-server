@@ -1,5 +1,6 @@
 package cn.shaikuba.mock.data.loader.http;
 
+import cn.shaikuba.mock.common.exception.UnifiedRuntimeException;
 import cn.shaikuba.mock.common.process.loader.JsonMockDataLoader;
 import cn.shaikuba.mock.common.util.CollectionUtils;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
@@ -45,10 +46,12 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
         }
         HttpMockRequest foundMockRequest = mockRequestList.stream().filter(targetMockRequest -> {
             BehaviorDescription behaviorDescription = targetMockRequest.getMockBehavior();
-            Map<String, String> matchers = behaviorDescription.getMatchers();
+            if (behaviorDescription == null) {
+                return true;
+            }
 
-            if (behaviorDescription == null
-                    || CollectionUtils.isEmpty(matchers)) {
+            Map<String, String> matchers = behaviorDescription.getMatchers();
+            if (CollectionUtils.isEmpty(matchers)) {
                 return true;
             }
 
@@ -60,20 +63,24 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
             if (StringUtils.isNotBlank(queryString)) {
                 String[] paramPairs = mockRequest.getQueryString().split("&");
                 if (paramPairs.length != 0) {
-                    matchers.forEach((key, value) -> {
-                        boolean matchRes = Arrays.stream(paramPairs).anyMatch(paramPair -> {
-                                    String[] params = paramPair.split("=");
-                                    if (params.length != 2) {
-                                        return false;
+                    try {
+                        matchers.forEach((key, value) -> {
+                            boolean matchRes = Arrays.stream(paramPairs).anyMatch(paramPair -> {
+                                        String[] params = paramPair.split("=");
+                                        if (params.length != 2) {
+                                            return false;
+                                        }
+                                        return params[0].equals(key) && params[1].matches(value);
                                     }
-                                    return params[0].equals(key) && params[1].matches(value);
-                                }
-                        );
-                        if (!matchRes) { // exit match process when there is one matcher match failed
-                            matched.set(false);
-                            return;
-                        }
-                    });
+                            );
+                            if (!matchRes) { // exit match process when there is one matcher match failed
+                                matched.set(false);
+                                throw new UnifiedRuntimeException("bread foreach");
+                            }
+                        });
+                    } catch (UnifiedRuntimeException e) {
+                        log.info(e.getMessage());
+                    }
                 }
 
                 if (matched.get()) {
@@ -87,13 +94,18 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
 
             JSONObject jsonBody;
             if ((jsonBody = jsonMessageConverter.convert(requestBodyString)) != null) {
-                matchers.forEach((key, value) -> {
-                    if (!jsonBody.containsKey(key)
-                            || !jsonBody.getString(key).matches(value)) {
-                        matched.set(false);
-                        return;
-                    }
-                });
+
+                try {
+                    matchers.forEach((key, value) -> {
+                        if (!jsonBody.containsKey(key)
+                                || !jsonBody.getString(key).matches(value)) {
+                            matched.set(false);
+                            throw new UnifiedRuntimeException("bread foreach");
+                        }
+                    });
+                } catch (UnifiedRuntimeException e) {
+                    log.info(e.getMessage());
+                }
 
                 if (matched.get()) {
                     return true;
@@ -103,13 +115,17 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
             Document xmlBody;
             if ((xmlBody = xmlMessageConverter.convert(requestBodyString)) != null
                     && xmlBody.getRootElement().hasContent()) {
-                matchers.forEach((key, value) -> {
-                    if (xmlBody.getRootElement().element(key) == null
-                            || !xmlBody.getRootElement().element(key).getTextTrim().matches(value)) {
-                        matched.set(false);
-                        return;
-                    }
-                });
+                try {
+                    matchers.forEach((key, value) -> {
+                        if (xmlBody.getRootElement().element(key) == null
+                                || !xmlBody.getRootElement().element(key).getTextTrim().matches(value)) {
+                            matched.set(false);
+                            throw new UnifiedRuntimeException("break foreach");
+                        }
+                    });
+                } catch (UnifiedRuntimeException e) {
+                    log.info(e.getMessage());
+                }
 
                 if (matched.get()) {
                     return true;
@@ -118,7 +134,7 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
             }
 
             return false;
-        }).findFirst().get();
+        }).findFirst().orElse(null);
 
         return foundMockRequest;
     }

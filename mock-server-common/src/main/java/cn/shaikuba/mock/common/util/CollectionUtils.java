@@ -199,11 +199,11 @@ public abstract class CollectionUtils {
     }
 
     public static boolean isEmpty(Map map) {
-        return map != null && !map.isEmpty();
+        return map == null || map.isEmpty();
     }
 
     public static boolean isEmpty(Collection<?> collection) {
-        return collection != null && !collection.isEmpty();
+        return collection == null || collection.isEmpty();
     }
 
 }

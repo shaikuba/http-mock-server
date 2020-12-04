@@ -53,16 +53,15 @@ public class HttpMockManagementController {
         return resultVO;
     }
 
-    @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResultVO saveMockRequest(@RequestBody HttpMockRequest mockRequest) {
         if (!mockRequest.isValid()) {
             return ResultVO.fail(String.format("Some required fields' value is empty, required non-empty fields: %s!", StringUtils.join(mockRequest.validateCreateMockRequest())));
         }
-        boolean exist = httpMockService.findMockRequest(mockRequest) != null;
-        if (!exist) {
-            httpMockService.saveMockRequest(mockRequest);
-        } else {
+        if (mockRequest.getId() != null && mockRequest.getId() > 0) {
             httpMockService.updateMockRequest(mockRequest);
+        } else {
+            httpMockService.saveMockRequest(mockRequest);
         }
         return ResultVO.success("Save Successfully");
     }
