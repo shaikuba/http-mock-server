@@ -45,7 +45,7 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
             return null;
         }
         HttpMockRequest foundMockRequest = mockRequestList.stream().filter(targetMockRequest -> {
-            BehaviorDescription behaviorDescription = targetMockRequest.getMockBehavior();
+            BehaviorDescription behaviorDescription = targetMockRequest.behaviorDescription();
             if (behaviorDescription == null) {
                 return true;
             }

@@ -15,7 +15,7 @@ public class MockCallbackRequest {
     @Pattern(regexp = "(GET|POST)", message = "Callback request method should be GET or POST.")
     private String method;
 
-    private String requestBody;
+//    private String requestBody;  replaced by bodyParams
 
     private Map<String, String> bodyParams;
 

@@ -1,8 +1,8 @@
 package cn.shaikuba.mock.controller;
 
 import cn.shaikuba.mock.common.util.CollectionUtils;
-import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
+import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import cn.shaikuba.mock.service.HttpMockCacheService;
 import cn.shaikuba.mock.service.behavior.BehaviorServiceRegister;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
@@ -66,7 +66,7 @@ public class HttpMockRequestController {
             httpResponse.setContentType(MediaType.parseMediaType(mockResponse.getContentType()).toString());
             //httpResponse.setCharacterEncoding("UTF-8"); // instead of invoking setContentType("application/json;charset=gbk")
 
-            BehaviorDescription behaviorDescription = mockResponse.getMockBehavior();
+            BehaviorDescription behaviorDescription = mockResponse.behaviorDescription();
             if (behaviorDescription != null) {
                 behaviorServiceRegister.action(behaviorDescription);
             }
@@ -89,11 +89,10 @@ public class HttpMockRequestController {
     }
 
     private HttpMockRequest objectConverter(HttpServletRequest servletRequest) throws IOException {
-        HttpMockRequest.HttpMockRequestBuilder mockRequestBuilder = HttpMockRequest.builder()
-                .requestMethod(servletRequest.getMethod())
-                .requestUrl(servletRequest.getRequestURI().substring(servletRequest.getRequestURI().indexOf("api") + 3))
-                .queryString(servletRequest.getQueryString())
-                .formData(servletRequest.getQueryString());
+        HttpMockRequest mockRequest = new HttpMockRequest(servletRequest.getMethod()
+                , servletRequest.getRequestURI().substring(servletRequest.getRequestURI().indexOf("api") + 3));
+        mockRequest.setQueryString(servletRequest.getQueryString());
+        mockRequest.setFormData(servletRequest.getQueryString());
 
         // headers
         Enumeration<String> headerNames = servletRequest.getHeaderNames();
@@ -102,14 +101,14 @@ public class HttpMockRequestController {
             String headerName = headerNames.nextElement();
             headers.put(headerName, servletRequest.getHeader(headerName));
         }
-        mockRequestBuilder.requestHeaders(JSON.toJSONString(headers));
+        mockRequest.setRequestHeaders(JSON.toJSONString(headers));
 
         // request body
         Reader reader = servletRequest.getReader();
-        mockRequestBuilder.requestBody(IOUtils.toString(reader));
+        mockRequest.setRequestBody(IOUtils.toString(reader));
         reader.close();
 
-        return mockRequestBuilder.build();
+        return mockRequest;
     }
 
     private void serviceNotFound(HttpServletResponse response) throws IOException {

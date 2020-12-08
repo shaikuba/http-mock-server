@@ -5,10 +5,7 @@ import cn.shaikuba.mock.common.process.entity.MockResponse;
 import cn.shaikuba.mock.data.annoation.MockField;
 import cn.shaikuba.mock.data.entity.base.BaseEntity;
 import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,11 +20,16 @@ import java.util.stream.Stream;
 import static cn.shaikuba.mock.common.util.NoOp.noOp;
 
 @Slf4j
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Data
 public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements MockRequest, MockResponse {
+
+    public HttpMockRequest() {
+    }
+
+    public HttpMockRequest(String requestMethod, String requestUrl) {
+        this.requestMethod = requestMethod;
+        this.requestUrl = requestUrl;
+    }
 
     private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
@@ -45,7 +47,7 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     private String formData;
     private String requestHeaders;
 
-//    private String requestContentType;  // identify request body content-type dynamically
+    //    private String requestContentType;  // identify request body content-type dynamically
     private String requestBody;
 
     // mock response message
@@ -93,7 +95,7 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
 
     }
 
-    public BehaviorDescription getMockBehavior() {
+    public BehaviorDescription behaviorDescription() {
         return BehaviorDescription.genBehavior(this);
     }
 
