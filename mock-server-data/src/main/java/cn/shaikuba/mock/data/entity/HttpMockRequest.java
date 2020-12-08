@@ -44,6 +44,8 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     private String queryString;
     private String formData;
     private String requestHeaders;
+
+//    private String requestContentType;  // identify request body content-type dynamically
     private String requestBody;
 
     // mock response message
@@ -92,7 +94,7 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     }
 
     public BehaviorDescription getMockBehavior() {
-        return BehaviorDescription.genBehavior(this.description);
+        return BehaviorDescription.genBehavior(this);
     }
 
 }

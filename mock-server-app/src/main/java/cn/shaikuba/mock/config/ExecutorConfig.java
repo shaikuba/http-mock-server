@@ -37,7 +37,7 @@ public class ExecutorConfig implements AsyncConfigurer {
 
         executor.setCorePoolSize(50);
         executor.setMaxPoolSize(100);
-        executor.setQueueCapacity(100);
+        executor.setQueueCapacity(400);
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setAwaitTerminationSeconds(5);
 

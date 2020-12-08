@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Map;
 
 @Data
 public class MockCallbackRequest {
@@ -16,15 +17,19 @@ public class MockCallbackRequest {
 
     private String requestBody;
 
-//    private String contentType;
+    private Map<String, String> bodyParams;
+
+    private String contentType;
+
+    private Map<String, String> headers;
 
     private AdvancedBehavior advancedBehavior;
 
     @Data
     public static class AdvancedBehavior {
         private int invokeTimes = 1;
-        private long delayInFirstInvoke = 5000l;
-        private long intervalInMillis = 5000l;
+        private long delayInFirstInvoke = 0l;
+        private long intervalInMillis = 0l;
 
         //private List<MockCallbackRequest> callbackList;
     }

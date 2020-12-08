@@ -136,7 +136,25 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
             return false;
         }).findFirst().orElse(null);
 
+        if (foundMockRequest != null) {
+            merge(mockRequest, foundMockRequest);
+        }
         return foundMockRequest;
+    }
+
+    /**
+     * Merge original http request info to the eligible mock response
+     * @param mockRequest
+     * @param mockResponse
+     */
+    private void merge(HttpMockRequest mockRequest, HttpMockRequest mockResponse) {
+        mockResponse.setRequestMethod(mockRequest.getRequestMethod());
+        mockResponse.setRequestUrl(mockRequest.getRequestUrl());
+        mockResponse.setRequestHeaders(mockRequest.getRequestHeaders());
+
+        mockResponse.setQueryString(mockRequest.getQueryString());
+        //mockResponse.setFormData(mockRequest.getFormData());
+        mockResponse.setRequestBody(mockRequest.getRequestBody());
     }
 
 }

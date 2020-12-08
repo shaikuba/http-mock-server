@@ -1,5 +1,6 @@
 package cn.shaikuba.mock.data.entity.description;
 
+import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
@@ -35,12 +36,15 @@ public class BehaviorDescription {
 
     private Map<String, String> matchers; // Match request parameter first, if match failed, then try to match with request body formed by json or xml
 
+    private HttpMockRequest originalRequest;
+
     private MockCallbackRequest mockCallback;
 
-    public static BehaviorDescription genBehavior(String description) {
+    public static BehaviorDescription genBehavior(HttpMockRequest mockRequest) {
         BehaviorDescription behaviorDescription = null;
         try {
-            behaviorDescription = JSON.parseObject(description, BehaviorDescription.class);
+            behaviorDescription = JSON.parseObject(mockRequest.getDescription(), BehaviorDescription.class);
+            behaviorDescription.setOriginalRequest(mockRequest);
         } catch (Exception e) {
             //throw new RuntimeException("Parse behavior description exceptionally, please check the format carefully.");
         }
