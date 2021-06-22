@@ -18,8 +18,12 @@ import java.util.Map;
  * "await": 1000,
  * "mockCallback": {
  * "url": "http://domain:port/mock/path",
- * "method": "get"
- * "requestBody": "{"key": "value"}",
+ * "method": "get",
+ * "headers": {
+ *     "Accept": "*\/*"
+ * }
+ * "contentType": "application/xml"
+ * "bodyParams": "{"key": "value"}",
  * "advancedBehavior": {
  * "invokeTimes": 2,
  * "delayInFirstInvoke": 1000,

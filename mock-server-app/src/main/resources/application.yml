@@ -32,12 +32,12 @@ server:
     accept-count: 50
     connection-timeout: 60
 
+
 ##### mybatis #####
 mybatis:
   type-aliases-package: cn.shaikuba.mock.data.entity
   mapper-locations: mapper/*.xml
-  type-handlers-package: cn.shaikuba.mock.data.mybatis.typehandler
-
+  type-handlers-package: cn.shaikuba.mock.data.mybatis.typeHandler
 ##### page helper for mybatis #####
 #pagehelper:
 #  helperDialect: mysql

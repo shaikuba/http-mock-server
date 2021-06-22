@@ -7,6 +7,9 @@ import cn.shaikuba.mock.service.HttpMockCacheService;
 import cn.shaikuba.mock.service.behavior.BehaviorServiceRegister;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Joiner;
+import com.google.gson.internal.Streams;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,9 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -91,8 +92,17 @@ public class HttpMockRequestController {
     private HttpMockRequest objectConverter(HttpServletRequest servletRequest) throws IOException {
         HttpMockRequest mockRequest = new HttpMockRequest(servletRequest.getMethod()
                 , servletRequest.getRequestURI().substring(servletRequest.getRequestURI().indexOf("api") + 3));
+
+        // query string
         mockRequest.setQueryString(servletRequest.getQueryString());
-        mockRequest.setFormData(servletRequest.getQueryString());
+
+        // form parameters
+        JSONObject parameterJson = new JSONObject();
+        Map<String, String[]> parameterMap = servletRequest.getParameterMap();
+        if (!parameterMap.isEmpty()) {
+            parameterMap.forEach((key, value) -> parameterJson.put(key, Joiner.on(",").join(value)));
+        }
+        mockRequest.setFormData(parameterJson.toJSONString());
 
         // headers
         Enumeration<String> headerNames = servletRequest.getHeaderNames();

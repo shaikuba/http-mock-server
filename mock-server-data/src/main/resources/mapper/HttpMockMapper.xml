@@ -6,6 +6,7 @@
                type="cn.shaikuba.mock.data.entity.HttpMockRequest">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
+        <result column="tags" property="tags"/>
         <result column="request_url" property="requestUrl"/>
         <result column="query_string" property="queryString"/>
         <result column="request_method" property="requestMethod"/>
@@ -17,33 +18,41 @@
         <result column="response_body" property="responseBody" jdbcType="LONGVARCHAR"/>
         <result column="status_code" property="statusCode"/>
         <result column="description" property="description"/>
+        <result column="status" property="status" jdbcType="VARCHAR" javaType="String"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-	<sql id="MOCK_REQUEST">
+    <sql id="MOCK_REQUEST">
         mock_request
 	</sql>
 
     <sql id="MOCK_REQUEST_COLUMNS">
-        `title`,
-        `request_url`, `query_string`,  `request_method`, `form_data`, `content_type`, `request_body`, `request_headers`,
-        `response_headers`, `response_body`
-        , `status_code`, `description`, `create_time`, `update_time`
+        `title`, `tags`
+        , `request_url`, `query_string`,  `request_method`, `form_data`, `content_type`, `request_body`, `request_headers`
+        , `response_headers`, `response_body`, `status_code`
+        , `description`, `status`
+        , `create_time`, `update_time`
     </sql>
 
     <insert id="save" parameterType="HttpMockRequest" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO <include refid="MOCK_REQUEST" />
-            (<include refid="MOCK_REQUEST_COLUMNS" />)
+        INSERT INTO
+        <include refid="MOCK_REQUEST"/>
+        (<include refid="MOCK_REQUEST_COLUMNS"/>)
         VALUES
-        (#{title}, #{requestUrl}, #{queryString}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody}, #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, NOW(), NOW())
+        (#{title}, #{tags}, #{requestUrl}, #{queryString}, #{requestMethod}, #{formData}, #{contentType}, #{requestBody},
+        #{requestHeaders}, #{responseHeaders}, #{responseBody}, #{statusCode}, #{description}, 'a', NOW(), NOW())
     </insert>
-    
+
     <update id="update">
-        UPDATE <include refid="MOCK_REQUEST" />
+        UPDATE
+        <include refid="MOCK_REQUEST"/>
         <set>
             <if test="title != null and title != ''">
                 title=#{title},
+            </if>
+            <if test="tags != null and tags != ''">
+                tags=#{tags},
             </if>
             <if test="queryString != null and queryString != ''">
                 query_string=#{queryString},
@@ -71,6 +80,9 @@
             </if>
             <if test="description != null and description != ''">
                 description=#{description},
+            </if>
+            <if test="status != null and status != ''">
+                status=#{status},
             </if>
             update_time=NOW()
         </set>
@@ -111,9 +123,7 @@
         SELECT * FROM
         <include refid="MOCK_REQUEST"/>
         <where>
-            <if test="id != null and id != ''">
-                id = #{id}
-            </if>
+            status='a'
             <if test="requestMethod != null and requestMethod != ''">
                 AND request_method=#{requestMethod}
             </if>
@@ -131,8 +141,13 @@
                 request_method=#{criteria.requestMethod}
             </if>
             <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
-                AND request_url like concat('%', #{criteria.requestUrl}, '%')
+                AND (
+                request_url like concat('%', #{criteria.requestUrl}, '%')
+                OR title like concat('%', #{criteria.requestUrl}, '%')
+                OR tags like concat('%', #{criteria.requestUrl}, '%')
+                )
             </if>
+
         </where>
         <if test="sort != null">
             ORDER BY ${sort.sortBy} ${sort.direction}
@@ -147,21 +162,26 @@
         </choose>
     </select>
 
-	<select id="countByCriteria" parameterType="Criteria" resultType="int">
+    <select id="countByCriteria" parameterType="Criteria" resultType="int">
         SELECT COUNT(ID) AS count
-        FROM <include refid="MOCK_REQUEST" />
-		<where>
+        FROM
+        <include refid="MOCK_REQUEST"/>
+        <where>
             <if test="criteria.requestMethod != null and criteria.requestMethod != ''">
                 request_method=#{criteria.requestMethod}
             </if>
             <if test="criteria.requestUrl != null and criteria.requestUrl != ''">
-                AND request_url like concat('%', #{criteria.requestUrl}, '%')
+                AND (
+                request_url like concat('%', #{criteria.requestUrl}, '%')
+                OR title like concat('%', #{criteria.requestUrl}, '%')
+                )
             </if>
-		</where>
-	</select>
+        </where>
+    </select>
 
     <delete id="delete" parameterType="list">
-        DELETE FROM <include refid="MOCK_REQUEST" />
+        DELETE FROM
+        <include refid="MOCK_REQUEST"/>
         <where>
             <if test="list != null and list.size != 0">
                 id IN

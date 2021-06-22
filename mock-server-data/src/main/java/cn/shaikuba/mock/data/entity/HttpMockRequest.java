@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,6 +35,8 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     private String title;
+
+    private List<String> tags;
 
     @Pattern(regexp = "/.+", message = "Request url should start with char '/'")
     @MockField(required = true)
@@ -62,6 +65,8 @@ public class HttpMockRequest extends BaseEntity<HttpMockRequest> implements Mock
     private String contentType;
 
     private String description;
+
+    private String status = "a"; //a: active, n:deactivation
 
     public Set<ConstraintViolation<HttpMockRequest>> validateMockRequest() {
         return validator.validate(this);

@@ -7,15 +7,15 @@ import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.description.BehaviorDescription;
 import cn.shaikuba.mock.data.loader.message.JsonMessageConverter;
 import cn.shaikuba.mock.data.loader.message.XmlMessageConverter;
+import cn.shaikuba.mock.data.matchers.FormDataMatcher;
+import cn.shaikuba.mock.data.matchers.QueryStringMatcher;
 import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -57,37 +57,16 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
 
             AtomicBoolean matched = new AtomicBoolean(true);
             //1. match query string first
-            String queryString = StringUtils.trimToEmpty(mockRequest.getQueryString());
-//            String formQueryString = StringUtils.trimToEmpty(mockRequest.getFormData());
-//            String fullQueryString = StringUtils.removeStart(queryString.concat("&").concat(formQueryString), "&");
-            if (StringUtils.isNotBlank(queryString)) {
-                String[] paramPairs = mockRequest.getQueryString().split("&");
-                if (paramPairs.length != 0) {
-                    try {
-                        matchers.forEach((key, value) -> {
-                            boolean matchRes = Arrays.stream(paramPairs).anyMatch(paramPair -> {
-                                        String[] params = paramPair.split("=");
-                                        if (params.length != 2) {
-                                            return false;
-                                        }
-                                        return params[0].equals(key) && params[1].matches(value);
-                                    }
-                            );
-                            if (!matchRes) { // exit match process when there is one matcher match failed
-                                matched.set(false);
-                                throw new UnifiedRuntimeException("bread foreach");
-                            }
-                        });
-                    } catch (UnifiedRuntimeException e) {
-                        log.info(e.getMessage());
-                    }
-                }
-
-                if (matched.get()) {
-                    return true;
-                }
+            QueryStringMatcher queryStringMatcher = new QueryStringMatcher(matchers);
+            if (queryStringMatcher.matches(mockRequest.getQueryString())) {
+                return true;
             }
 
+            //2. match with form data
+            FormDataMatcher formDataMatcher = new FormDataMatcher(matchers);
+            if (formDataMatcher.matches(JSONObject.parseObject(mockRequest.getFormData()))) {
+                return true;
+            }
 
             //2. match request body when query string match failed
             String requestBodyString = mockRequest.getRequestBody();
@@ -144,6 +123,7 @@ public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, 
 
     /**
      * Merge original http request info to the eligible mock response
+     *
      * @param mockRequest
      * @param mockResponse
      */

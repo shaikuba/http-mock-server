@@ -39,7 +39,7 @@ public class HttpMockManagementController {
                 .withData(mockRequest);
     }
 
-    @PostMapping(value = "list", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "list", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResultVO<Pageable<HttpMockRequest>> getMockObjList(@RequestBody Criteria<HttpMockRequest> criteria) {
         List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(criteria);
         int count = mockMapper.countByCriteria(criteria);
