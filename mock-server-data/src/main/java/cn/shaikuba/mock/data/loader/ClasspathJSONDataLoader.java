@@ -3,6 +3,7 @@ package cn.shaikuba.mock.data.loader;
 import cn.shaikuba.mock.common.process.loader.JsonMockDataLoader;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @author Ray.Xu
  */
 @Slf4j
+@ConditionalOnProperty(prefix = "mock.server.http", value = "data-loader", havingValue = "classpath")
 @Component
 public class ClasspathJSONDataLoader extends JsonMockDataLoader<HttpMockRequest, HttpMockRequest> {
 

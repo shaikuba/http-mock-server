@@ -24,21 +24,16 @@ public class HttpMockCacheService {
     private String dataLoader;
 
     @Autowired
-    private ApplicationContext appContext;
+    private MockDataLoader mockDataLoader;
 
     @Cacheable(cacheNames = "http-mock-response" , keyGenerator =  "httpMockKey")
     public HttpMockRequest handle(HttpMockRequest mockRequest) {
 
         HttpMockRequestHandler mockRequestHandler = (HttpMockRequestHandler)handlerManager.select(mockRequest.getClass());
 
-        HttpMockRequest mockResponse = null;
-        try {
-            mockRequestHandler.setUpDataSource(new MockDataSourceAdapter(appContext.getBean((Class<MockDataLoader>) Class.forName(dataLoader))));
-            mockResponse = mockRequestHandler.handle(mockRequest);
-            log.info("Mock response {}", JSON.toJSONString(mockResponse));
-        } catch (ClassNotFoundException e) {
-            log.error(e.getMessage(), e);
-        }
+        mockRequestHandler.setUpDataSource(new MockDataSourceAdapter(mockDataLoader));
+        HttpMockRequest mockResponse = mockRequestHandler.handle(mockRequest);
+        log.info("Mock response {}", JSON.toJSONString(mockResponse));
 
         return mockResponse;
     }

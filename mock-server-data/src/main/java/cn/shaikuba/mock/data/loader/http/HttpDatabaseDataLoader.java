@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * DatabaseDataLoader
  */
 @Slf4j
+@ConditionalOnProperty(prefix = "mock.server.http", value = "data-loader", havingValue = "database")
 @Component
 public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, HttpMockRequest> {
 
