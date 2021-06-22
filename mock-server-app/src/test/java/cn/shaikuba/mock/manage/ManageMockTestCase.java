@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootItTest
-class ManageMockRequestTestCase extends MockMvcTester {
+class ManageMockTestCase extends MockMvcTester {
 
     @MockBean
     private HttpMockRequestService requestService;

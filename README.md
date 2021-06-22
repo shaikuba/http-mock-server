@@ -5,6 +5,10 @@
 </p>
 <br/>
 
+# 扫码加入微信技术学习交流群
+
+![avatar](img/weiwei.png)
+
 # Mock Server Tools
 ***
 Mock server used to support for testing as substitution of the real server.
