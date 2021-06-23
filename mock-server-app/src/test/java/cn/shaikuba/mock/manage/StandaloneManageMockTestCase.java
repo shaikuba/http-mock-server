@@ -3,7 +3,6 @@ package cn.shaikuba.mock.manage;
 import cn.shaikuba.mock.controller.HttpMockManagementController;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.Criteria;
-import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,9 +36,6 @@ class StandaloneManageMockTestCase {
 
     @Mock
     private HttpMockRequestService requestService;
-
-    @Mock
-    private HttpMockMapper mockMapper;
 
     private MockMvc mockMvc;
 
@@ -71,7 +67,7 @@ class StandaloneManageMockTestCase {
         mockRequestList.add(mockRequest_2);
 
         doReturn(mockRequestList).when(requestService).findMockRequests(any());
-        doReturn(20).when(mockMapper).countByCriteria(any());
+        doReturn(20).when(requestService).countBy(any());
 
         Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
                 .criteria(new HttpMockRequest());
@@ -87,6 +83,10 @@ class StandaloneManageMockTestCase {
                         , jsonPath("$.code").value("0000")
                 ))
                 .andReturn();
+
+        verify(requestService, times(1)).findMockRequests(any());
+        verify(requestService, times(1)).countBy(any());
+
     }
 
 }

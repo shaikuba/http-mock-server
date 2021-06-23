@@ -18,4 +18,6 @@ public interface MockRequestService<T extends BaseEntity & MockRequest> {
     T findMockRequest(T mockRequest);
 
     <C>List<T> findMockRequests(Criteria<C> criteria);
+
+    <C>int countBy(Criteria<C> criteria);
 }

@@ -45,5 +45,10 @@ public class HttpMockRequestService implements MockRequestService<HttpMockReques
         return mockMapper.findAll(criteria);
     }
 
+    @Override
+    public <C> int countBy(Criteria<C> criteria) {
+        return mockMapper.countByCriteria(criteria);
+    }
+
 
 }

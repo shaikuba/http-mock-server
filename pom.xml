@@ -42,10 +42,14 @@
             </dependency>
 
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>6.11</version>
-                <scope>test</scope>
+                <groupId>cn.shaikuba.mock</groupId>
+                <artifactId>mock-server-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.shaikuba.mock</groupId>
+                <artifactId>mock-server-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!--spring boot admin server-->

@@ -1,15 +1,16 @@
 package cn.shaikuba.mock.manage;
 
-import cn.shaikuba.mock.base.MockMvcTester;
-import cn.shaikuba.mock.base.SpringBootItTest;
+import cn.shaikuba.mock.controller.HttpMockManagementController;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.Criteria;
-import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootItTest
-class ManageMockTestCase extends MockMvcTester {
+@WebMvcTest(controllers = HttpMockManagementController.class)
+class ManageMockWebMvcTestCase {
 
-    @MockBean
+    @MockBean(name = "httpMockRequestService")
     private HttpMockRequestService requestService;
+
+    @Autowired
+    private MockMvc mockMvc;
+
 
     @Test
     void mockListTest() throws Exception {

@@ -10,7 +10,6 @@ import java.util.ServiceLoader;
 @Configuration
 public class BeanConfiguration {
 
-
     @Bean
     public MockRequestHandlerManager handlerManager() {
         MockRequestHandlerManager handlerManager = new MockRequestHandlerManager();

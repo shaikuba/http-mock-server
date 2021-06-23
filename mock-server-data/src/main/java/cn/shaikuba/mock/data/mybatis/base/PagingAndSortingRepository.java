@@ -1,4 +1,4 @@
-package cn.shaikuba.mock.data.mybatis.mapper.base;
+package cn.shaikuba.mock.data.mybatis.base;
 
 import cn.shaikuba.mock.data.entity.base.Criteria;
 import cn.shaikuba.mock.data.entity.base.Pageable;

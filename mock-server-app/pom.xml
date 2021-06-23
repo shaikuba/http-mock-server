@@ -25,7 +25,6 @@
         <dependency>
             <groupId>cn.shaikuba.mock</groupId>
             <artifactId>mock-server-data</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

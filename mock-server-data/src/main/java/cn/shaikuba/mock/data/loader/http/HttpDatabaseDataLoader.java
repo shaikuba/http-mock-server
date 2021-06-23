@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * DatabaseDataLoader
  */
 @Slf4j
-@ConditionalOnProperty(prefix = "mock.server.http", value = "data-loader", havingValue = "database")
+@ConditionalOnProperty(prefix = "mock.server.http", name = "data-loader", havingValue = "database")
 @Component
 public class HttpDatabaseDataLoader extends JsonMockDataLoader<HttpMockRequest, HttpMockRequest> {
 

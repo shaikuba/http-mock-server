@@ -4,15 +4,15 @@ import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.api.ResultVO;
 import cn.shaikuba.mock.data.entity.base.Criteria;
 import cn.shaikuba.mock.data.entity.base.Pageable;
-import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,11 +23,9 @@ import java.util.stream.Stream;
 @CrossOrigin(origins = "*")
 public class HttpMockManagementController {
 
-    @Resource(name = "httpMockRequestService")
+    @Qualifier(value = "httpMockRequestService")
+    @Autowired
     private HttpMockRequestService httpMockService;
-
-    @Resource
-    private HttpMockMapper mockMapper;
 
     @GetMapping("/{id}")
     public ResultVO<HttpMockRequest> getMockObj(@PathVariable Long id) {
@@ -42,7 +40,7 @@ public class HttpMockManagementController {
     @PostMapping(value = "list", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResultVO<Pageable<HttpMockRequest>> getMockObjList(@RequestBody Criteria<HttpMockRequest> criteria) {
         List<HttpMockRequest> mockRequestList = httpMockService.findMockRequests(criteria);
-        int count = mockMapper.countByCriteria(criteria);
+        int count = httpMockService.countBy(criteria);
 
         Pageable<HttpMockRequest> pageable = new Pageable<>();
         pageable.setDataCount(count);
