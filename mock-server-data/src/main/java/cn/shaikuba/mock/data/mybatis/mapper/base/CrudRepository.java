@@ -1,4 +1,4 @@
-package cn.shaikuba.mock.data.mybatis.base;
+package cn.shaikuba.mock.data.mybatis.mapper.base;
 
 import java.io.Serializable;
 import java.util.List;
