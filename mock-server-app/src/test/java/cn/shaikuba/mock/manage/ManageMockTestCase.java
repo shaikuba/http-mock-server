@@ -4,7 +4,6 @@ import cn.shaikuba.mock.base.MockMvcTester;
 import cn.shaikuba.mock.base.SpringBootItTest;
 import cn.shaikuba.mock.data.entity.HttpMockRequest;
 import cn.shaikuba.mock.data.entity.base.Criteria;
-import cn.shaikuba.mock.data.mybatis.mapper.HttpMockMapper;
 import cn.shaikuba.mock.service.impl.HttpMockRequestService;
 import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.Test;
@@ -45,20 +44,9 @@ class ManageMockTestCase extends MockMvcTester {
         doReturn(mockRequestList).when(requestService).findMockRequests(any());
         doReturn(20).when(requestService).countBy(any());
 
-        Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria()
-                .criteria(new HttpMockRequest());
+        Criteria<HttpMockRequest> criteria = Criteria.<HttpMockRequest>newCriteria().criteria(new HttpMockRequest());
         // send and verify
-        this.mockMvc.perform(post("/mock/manage/list")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(JSON.toJSONString(criteria))
-        )
-                .andExpect(status().isOk())
-                .andExpect(matchAll(
-                        jsonPath("$.status").value(true)
-                        , jsonPath("$.code").value("0000")
-                ))
-                .andReturn();
+        this.mockMvc.perform(post("/mock/manage/list").contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8").content(JSON.toJSONString(criteria))).andExpect(status().isOk()).andExpect(matchAll(jsonPath("$.status").value(true), jsonPath("$.code").value("0000"))).andReturn();
     }
 
 }
