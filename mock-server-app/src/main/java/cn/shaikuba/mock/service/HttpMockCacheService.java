@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -26,10 +25,10 @@ public class HttpMockCacheService {
     @Autowired
     private MockDataLoader mockDataLoader;
 
-    @Cacheable(cacheNames = "http-mock-response" , keyGenerator =  "httpMockKey")
+    @Cacheable(cacheNames = "http-mock-response", keyGenerator = "httpMockKey")
     public HttpMockRequest handle(HttpMockRequest mockRequest) {
 
-        HttpMockRequestHandler mockRequestHandler = (HttpMockRequestHandler)handlerManager.select(mockRequest.getClass());
+        HttpMockRequestHandler mockRequestHandler = (HttpMockRequestHandler) handlerManager.select(mockRequest.getClass());
 
         mockRequestHandler.setUpDataSource(new MockDataSourceAdapter(mockDataLoader));
         HttpMockRequest mockResponse = mockRequestHandler.handle(mockRequest);

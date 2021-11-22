@@ -23,6 +23,7 @@ server:
     client-auth: want
     trust-store: classpath:securities/client-truststore.p12
     #trust-store-password: 123456
+    enabled: true
 
   tomcat:
     uri-encoding: UTF-8
